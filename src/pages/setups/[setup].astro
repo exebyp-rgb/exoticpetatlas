@@ -1,0 +1,985 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { setup: 'bearded-dragon-habitat' } },
+    { params: { setup: 'ball-python-setup' } },
+    { params: { setup: 'axolotl-aquarium' } },
+    { params: { setup: 'ferret-cage' } },
+    { params: { setup: 'sugar-glider-habitat' } },
+    { params: { setup: 'hedgehog-enclosure' } },
+    { params: { setup: 'parrot-cage' } },
+    { params: { setup: 'leopard-gecko-terrarium' } },
+  ];
+}
+
+const { setup } = Astro.params;
+
+interface SetupGuide {
+  name: string;
+  emoji: string;
+  type: string;
+  minSize: string;
+  difficulty: string;
+  description: string;
+  enclosureDetails?: {
+    size: string[];
+    materials: string[];
+    features: string[];
+  };
+  lighting?: {
+    type: string[];
+    schedule: string;
+    bulbs: string[];
+    tips: string[];
+  };
+  heating?: {
+    temperature: string[];
+    equipment: string[];
+    gradient: string;
+    tips: string[];
+  };
+  substrate?: {
+    recommended: string[];
+    avoid: string[];
+    depth: string;
+    tips: string[];
+  };
+  budget?: {
+    low: string[];
+    medium: string[];
+    high: string[];
+    savingTips: string[];
+  };
+  safety?: {
+    tips: string[];
+    hazards: string[];
+    emergencyPrep: string[];
+  };
+}
+
+const setupData: Record<string, SetupGuide> = {
+  'bearded-dragon-habitat': {
+    name: 'Bearded Dragon Habitat',
+    emoji: '🦎',
+    type: 'Desert Terrarium',
+    minSize: '40-75 gallon tank',
+    difficulty: 'Beginner',
+    description: 'A proper bearded dragon setup mimics the arid Australian outback with proper heating, UVB lighting, and climbing opportunities.',
+    enclosureDetails: {
+      size: [
+        'Juvenile (0-6 months): 20-40 gallon tank minimum',
+        'Sub-adult (6-12 months): 40-55 gallon tank',
+        'Adult (12+ months): 75-120 gallon tank (48" x 24" x 24" minimum)',
+        'Bigger is always better - bearded dragons are active and appreciate space'
+      ],
+      materials: [
+        'Glass aquarium with screen top (most common)',
+        'PVC enclosures (excellent heat retention)',
+        'Wooden vivarium with glass doors',
+        'Custom-built enclosures (advanced option)'
+      ],
+      features: [
+        'Solid bottom (not wire mesh)',
+        'Secure screen top for ventilation',
+        'Front-opening doors preferred for easy access',
+        'Climbing branches and basking platforms',
+        'Multiple hiding spots (cool and warm sides)'
+      ]
+    },
+    lighting: {
+      type: [
+        'UVB Light: 10.0-12.0% UVB tube or compact bulb (CRITICAL)',
+        'Basking Light: 75-150W incandescent or halogen bulb',
+        'Night Heat (if needed): Ceramic heat emitter (CHE) - NO LIGHT'
+      ],
+      schedule: '12-14 hours of light per day (use timer for consistency)',
+      bulbs: [
+        'UVB tube bulbs (T5 or T8): Replace every 6-12 months',
+        'Mercury vapor bulbs: Provide both UVB and heat',
+        'Basking bulbs: Replace when burned out',
+        'Avoid colored bulbs or "night" bulbs that emit light'
+      ],
+      tips: [
+        'Place UVB light 10-12 inches from basking spot',
+        'UVB cannot penetrate glass or plastic - remove any barriers',
+        'Use a light meter to verify UVB output',
+        'Create a basking spot directly under lights'
+      ]
+    },
+    heating: {
+      temperature: [
+        'Basking spot: 95-105°F (35-40.5°C)',
+        'Cool side: 75-85°F (24-29°C)',
+        'Nighttime: 65-75°F (18-24°C)',
+        'Temperature gradient is ESSENTIAL'
+      ],
+      equipment: [
+        'Basking bulb (primary heat source)',
+        'Ceramic heat emitter for nighttime if needed',
+        'Under-tank heater (optional, use with caution)',
+        'Digital thermometers (at least 2: hot and cool sides)',
+        'Thermostat to regulate temperature'
+      ],
+      gradient: 'Create a thermal gradient so your bearded dragon can thermoregulate by moving between hot and cool zones',
+      tips: [
+        'Never use heat rocks - they can cause severe burns',
+        'Monitor with multiple thermometers, not guesswork',
+        'Adjust heating based on room temperature',
+        'Basking spot should be a flat surface, not just open air'
+      ]
+    },
+    substrate: {
+      recommended: [
+        'Tile (ceramic or slate) - BEST option, easy to clean',
+        'Reptile carpet (wash regularly)',
+        'Paper towels (cheap, easy, safe for juveniles)',
+        'Shelf liner (non-adhesive)',
+        'Excavator clay (naturalistic, diggable)'
+      ],
+      avoid: [
+        'Sand (impaction risk, especially for juveniles)',
+        'Walnut shell',
+        'Calcium sand',
+        'Wood chips or shavings',
+        'Any loose substrate for juveniles under 1 year'
+      ],
+      depth: 'Not applicable for tile/carpet. If using excavator clay: 2-4 inches',
+      tips: [
+        'Tile is the gold standard - easy to clean, safe, holds heat',
+        'Use slate tiles for natural look and heat retention',
+        'Avoid loose substrates until dragon is fully grown',
+        'Switch substrates if you notice ingestion'
+      ]
+    },
+    budget: {
+      low: [
+        'Total: $200-$350',
+        'Used 40-gallon tank: $40-$80',
+        'DIY basking platform: $10',
+        'Basic UVB fixture + bulb: $40-$60',
+        'Dome lamp + basking bulb: $20-$30',
+        'Paper towel substrate: $5',
+        'Digital thermometers (2): $15-$25',
+        'Water/food dishes: $10-$15',
+        'Hide boxes: $15-$30'
+      ],
+      medium: [
+        'Total: $400-$700',
+        '75-gallon new tank: $100-$200',
+        'T5 UVB fixture + bulb: $80-$120',
+        'Quality basking lamp + bulb: $40-$60',
+        'Tile substrate: $30-$50',
+        'Natural branches/decor: $40-$80',
+        'Thermostat: $30-$50',
+        'Quality thermometers/hygrometer: $30-$50',
+        'Multiple hides and enrichment: $40-$80'
+      ],
+      high: [
+        'Total: $800-$1,500+',
+        'Custom 120-gallon PVC enclosure: $400-$700',
+        'Premium T5 HO UVB system: $150-$200',
+        'Halogen flood basking setup: $80-$120',
+        'Professional thermostat: $80-$120',
+        'Custom tile or excavator substrate: $60-$100',
+        'Bioactive setup (plants, cleanup crew): $100-$200',
+        'Quality digital monitoring system: $80-$150',
+        'Premium naturalistic decor: $100-$200'
+      ],
+      savingTips: [
+        'Buy used tanks on Facebook Marketplace or Craigslist',
+        'Use ceramic tiles from hardware stores ($0.50-$2 each)',
+        'Make DIY hides from terracotta pots',
+        'Collect safe branches from outdoors (sanitize first)',
+        'Wait for sales at pet stores (often 25-50% off)',
+        'Start with essentials, upgrade gradually',
+        'Buy UVB bulbs in bulk online for savings'
+      ]
+    },
+    safety: {
+      tips: [
+        'Always use a thermostat to prevent overheating',
+        'Secure all heat lamps with guards to prevent burns',
+        'Check temperatures multiple times daily until stable',
+        'Keep electrical cords away from water sources',
+        'Ensure screen top is secure (bearded dragons can climb)',
+        'Remove any small objects that could be ingested',
+        'Supervise when handling to prevent falls',
+        'Quarantine new decorations and sanitize outdoor branches'
+      ],
+      hazards: [
+        'Heat lamps without guards (fire hazard)',
+        'Loose substrate for juveniles (impaction)',
+        'Overcrowding with decorations (stress)',
+        'Sharp edges on rocks or decorations',
+        'Toxic plants (if using live plants)',
+        'Direct sunlight on tank (overheating)',
+        'Using incorrect UVB bulbs (can cause eye damage)'
+      ],
+      emergencyPrep: [
+        'Keep spare UVB and heat bulbs on hand',
+        'Have backup heat source in case of power outage',
+        'Know location of nearest exotic vet',
+        'Keep thermometers calibrated',
+        'Have reptile first aid kit ready',
+        'Emergency contact: exotic vet phone number saved'
+      ]
+    }
+  },
+  'ball-python-setup': {
+    name: 'Ball Python Setup',
+    emoji: '🐍',
+    type: 'Tropical Terrarium',
+    minSize: '40+ gallon tank',
+    difficulty: 'Beginner',
+    description: 'Ball pythons need a secure enclosure with proper humidity, temperature gradients, and hiding spots to feel safe.',
+  },
+  'axolotl-aquarium': {
+    name: 'Axolotl Aquarium',
+    emoji: '🦎',
+    type: 'Aquatic Setup',
+    minSize: '20+ gallon long tank',
+    difficulty: 'Intermediate',
+    description: 'Axolotls require cold water aquariums with gentle filtration and a species-specific environment.',
+    enclosureDetails: {
+      size: [
+        'Single axolotl: 20-gallon LONG tank minimum (30+ gallons recommended)',
+        'Two axolotls: 40-gallon long tank minimum',
+        'Each additional axolotl: Add 10+ gallons',
+        'Tank shape: Long tanks better than tall (axolotls are bottom-dwellers)'
+      ],
+      materials: [
+        'Glass aquarium (standard)',
+        'Acrylic tank (scratches easily but lighter)',
+        'Waterproof lid or hood (axolotls can jump)',
+        'Stand that can support 200+ lbs when filled'
+      ],
+      features: [
+        'Long, shallow tank preferred over tall tanks',
+        'Lid or hood to prevent jumping',
+        'Smooth surfaces (no sharp decorations)',
+        'Plenty of hiding spots',
+        'Low water flow areas'
+      ]
+    },
+    lighting: {
+      type: [
+        'NO special lighting required',
+        'Low ambient room lighting is best',
+        'Optional: Low-wattage LED for viewing (NOT bright)',
+        'Avoid: Direct sunlight, bright aquarium lights, heating lamps'
+      ],
+      schedule: 'Natural room light cycle (12 hours light, 12 hours dark). Axolotls are nocturnal and prefer dim conditions.',
+      bulbs: [
+        'If using lights: Low-intensity LED only',
+        'Keep lights on timer to maintain consistent day/night cycle',
+        'Never use heating lamps - axolotls need COLD water'
+      ],
+      tips: [
+        'Axolotls prefer darkness - they have no eyelids',
+        'Too much light causes stress and health issues',
+        'Provide plenty of hides for retreating from light',
+        'Plants (real or fake) can help diffuse light'
+      ]
+    },
+    heating: {
+      temperature: [
+        'Ideal: 60-64°F (15.5-18°C)',
+        'Acceptable: 57-68°F (14-20°C)',
+        'DANGER ZONE: Above 72°F (22°C)',
+        'Critical: Above 75°F (24°C) can be fatal'
+      ],
+      equipment: [
+        'Aquarium chiller (if room temp is too warm) - $200-$500',
+        'Clip-on fans for mild cooling - $15-$40',
+        'Frozen water bottles (emergency cooling)',
+        'Thermometer (essential!) - $5-$20',
+        'NO heaters - axolotls need cold water'
+      ],
+      gradient: 'No gradient needed - entire tank should be consistently cool (60-64°F)',
+      tips: [
+        'Most important factor: Keep water COLD',
+        'Room AC may be necessary in warm climates',
+        'Use fans to cool water surface (cheap option)',
+        'Place tank in coolest room of house',
+        'Never use aquarium heaters',
+        'Monitor temperature daily - especially in summer',
+        'Invest in a chiller if room temp regularly exceeds 70°F'
+      ]
+    },
+    substrate: {
+      recommended: [
+        'Fine sand (00 grain size) - ONLY for adults over 6 inches',
+        'Bare bottom (easiest to clean, safest)',
+        'Large river rocks (too big to swallow)',
+        'Slate tiles (smooth, natural look)'
+      ],
+      avoid: [
+        'Gravel (major impaction risk)',
+        'Small rocks or pebbles',
+        'Aquarium sand (too coarse)',
+        'Colored/dyed substrates',
+        'Anything the axolotl can fit in its mouth'
+      ],
+      depth: 'Fine sand: 1-2 inches. Bare bottom: none needed.',
+      tips: [
+        'Bare bottom is safest for juveniles',
+        'If using sand, wait until axolotl is 6+ inches',
+        'Test sand: should feel like silk, not gritty',
+        'Large smooth river rocks are decorative and safe',
+        'Avoid substrate that can be ingested during feeding'
+      ]
+    },
+    budget: {
+      low: [
+        'Total: $150-$300',
+        'Used 20-gallon long tank: $20-$40',
+        'Sponge filter: $10-$20',
+        'Air pump: $10-$15',
+        'Thermometer: $5-$10',
+        'Bare bottom (no substrate): $0',
+        'Terracotta pot hides: $5-$15',
+        'Water conditioner: $8-$12',
+        'Clip-on fan (if needed): $15-$25',
+        'Basic LED light (optional): $15-$30'
+      ],
+      medium: [
+        'Total: $350-$600',
+        'New 29-40 gallon long tank: $50-$120',
+        'Canister filter or quality HOB: $60-$120',
+        'Aquarium chiller (if needed): $200-$350',
+        'Digital thermometer: $15-$25',
+        'Fine sand substrate: $20-$30',
+        'Quality hides and decor: $40-$80',
+        'Live plants: $30-$60',
+        'Water test kit: $20-$30',
+        'Python water changer: $25-$40'
+      ],
+      high: [
+        'Total: $700-$1,200+',
+        'Premium 40+ gallon long tank with stand: $200-$400',
+        'High-end aquarium chiller: $400-$600',
+        'Canister filter with media: $100-$200',
+        'Digital monitoring system: $50-$100',
+        'Professional aquascaping: $100-$200',
+        'Premium hides and enrichment: $80-$150',
+        'Complete water testing suite: $50-$80',
+        'Backup equipment and supplies: $100+'
+      ],
+      savingTips: [
+        'Buy used tanks during Petco dollar-per-gallon sales',
+        'Use terracotta pots from garden centers (1/4 the price)',
+        'Collect safe rocks and decorations (sanitize first)',
+        'DIY sponge filter from materials ($5 vs $20)',
+        'Use room AC instead of chiller if possible',
+        'Buy water conditioner in large bottles (better value)',
+        'Start with bare bottom, add sand later',
+        'Join axolotl communities for equipment swaps'
+      ]
+    },
+    safety: {
+      tips: [
+        'NEVER let water exceed 72°F - life threatening',
+        'Use dechlorinator for ALL water (chlorine/chloramine is toxic)',
+        'No fish tank decorations with sharp edges',
+        'Avoid small gravel (choking/impaction hazard)',
+        'Keep tank away from windows (temperature fluctuations)',
+        'Never house with fish (axolotls will eat them or be nipped)',
+        'Wash hands before/after handling (avoid contamination)',
+        'Use aquarium-safe silicone for any DIY projects'
+      ],
+      hazards: [
+        'Warm water (above 72°F) - causes stress, disease, death',
+        'Chlorine/chloramine in tap water (always use conditioner)',
+        'Ammonia buildup from inadequate filtration',
+        'Gravel substrate (impaction)',
+        'Aggressive tank mates (fish, other axolotls)',
+        'Strong water currents (stress)',
+        'Metal decorations (can leach toxins)'
+      ],
+      emergencyPrep: [
+        'Keep frozen water bottles for emergency cooling',
+        'Have backup air pump/battery backup',
+        'Extra dechlorinator and water on hand',
+        'Know emergency vet (not all vets treat axolotls)',
+        'Quarantine/hospital tank setup ready',
+        'Water testing kit to monitor parameters',
+        'Emergency contact: exotic vet specializing in aquatic animals'
+      ]
+    }
+  },
+  'ferret-cage': {
+    name: 'Ferret Cage',
+    emoji: '🦦',
+    type: 'Multi-Level Enclosure',
+    minSize: '24" x 24" x 36" minimum',
+    difficulty: 'Intermediate',
+    description: 'Ferrets are active animals needing spacious multi-level cages with plenty of enrichment and out-of-cage time.',
+    enclosureDetails: {
+      size: [
+        'Single ferret: 24"W x 24"D x 36"H ABSOLUTE MINIMUM',
+        'Two ferrets: 36"W x 24"D x 36"H minimum (bigger strongly recommended)',
+        'Ideal: Multi-level cage 30"+ wide, 18"+ deep, 36"+ tall',
+        'Remember: Cage is for sleeping/eating - ferrets need 4+ hours daily out-of-cage time'
+      ],
+      materials: [
+        'Wire cage with powder-coated metal (rust resistant)',
+        'Multi-level ferret-specific cages (ideal)',
+        'Modified large dog crate (budget option, add levels)',
+        'Custom-built ferret room or playpen (advanced)'
+      ],
+      features: [
+        'Multiple levels (3+ levels recommended)',
+        'Large front-opening doors for easy access',
+        'Bar spacing: 1 inch or less (ferrets can escape!)',
+        'Solid or covered ramps (not wire - hurts paws)',
+        'Secure latches (ferrets are escape artists)',
+        'Removable bottom tray for easy cleaning',
+        'Attached or clip-on accessories (hammocks, shelves)'
+      ]
+    },
+    lighting: {
+      type: [
+        'Natural room lighting (no special lights needed)',
+        'Avoid: Direct bright lights or heat lamps',
+        'Use room lights or ambient lighting'
+      ],
+      schedule: '14-16 hours of darkness per day (ferrets sleep A LOT). Cover cage partially or place in quiet room during sleep hours.',
+      bulbs: [
+        'No special bulbs required',
+        'Room lighting is sufficient',
+        'Avoid UV lights or heating lamps'
+      ],
+      tips: [
+        'Ferrets are crepuscular (active dawn/dusk)',
+        'Provide dark, quiet space for 14+ hours sleep',
+        'Cover part of cage with blanket if room is bright',
+        'Avoid placing cage near windows with direct sunlight'
+      ]
+    },
+    heating: {
+      temperature: [
+        'Ideal: 60-70°F (15-21°C)',
+        'Acceptable: 55-75°F (13-24°C)',
+        'Danger: Above 80°F (27°C) - ferrets overheat easily',
+        'Ferrets tolerate cold better than heat'
+      ],
+      equipment: [
+        'NO heating equipment needed (ferrets are cold-weather animals)',
+        'Room thermometer to monitor',
+        'Fan or AC for hot weather',
+        'Frozen water bottles for emergency cooling'
+      ],
+      gradient: 'No heating gradient needed - maintain consistent cool room temperature',
+      tips: [
+        'Ferrets are VERY susceptible to heat stroke',
+        'Keep cage in cool part of house',
+        'Provide frozen water bottles wrapped in towels on hot days',
+        'Never use heat lamps or heating pads',
+        'Watch for panting or lethargy (signs of overheating)',
+        'Air conditioning is essential in warm climates'
+      ]
+    },
+    substrate: {
+      recommended: [
+        'Fleece liners (washable, comfortable, BEST option)',
+        'Old towels or blankets (wash weekly)',
+        'Puppy pads in litter box only',
+        'Recycled paper pellets in litter box'
+      ],
+      avoid: [
+        'Wood shavings (respiratory issues)',
+        'Clay cat litter (dust, ingestion risk)',
+        'Clumping cat litter (DANGEROUS if ingested)',
+        'Cedar or pine (toxic)',
+        'Corn cob bedding (mold risk)'
+      ],
+      depth: 'Not applicable - use fleece liners or towels, not loose bedding',
+      tips: [
+        'Fleece is the gold standard - soft, washable, inexpensive',
+        'Cut fleece to fit each level of cage',
+        'Have multiple sets to rotate during washing',
+        'Secure liners so ferrets don\'t bunch them up',
+        'For litter box: use Yesterday\'s News or paper pellets',
+        'Wash all bedding weekly in ferret-safe detergent'
+      ]
+    },
+    budget: {
+      low: [
+        'Total: $150-$300',
+        'Used ferret cage: $50-$100',
+        'DIY fleece liners: $20-$30',
+        'Basic hammocks (2-3): $20-$40',
+        'Litter box: $10-$15',
+        'Paper pellet litter: $10/month',
+        'Food/water bowls: $10-$20',
+        'Basic toys: $15-$30',
+        'Sleep sacks/tunnels: $20-$40'
+      ],
+      medium: [
+        'Total: $350-$600',
+        'New multi-level ferret cage: $150-$300',
+        'Premium fleece liner set: $40-$80',
+        'Multiple hammocks and hanging beds: $50-$80',
+        'Corner litter boxes (2-3): $25-$40',
+        'Quality food/water bowls or bottles: $20-$30',
+        'Variety of toys and tunnels: $40-$80',
+        'Ferret-safe cleaning supplies: $20-$30',
+        'Extra accessories and enrichment: $30-$60'
+      ],
+      high: [
+        'Total: $700-$1,200+',
+        'Premium Ferret Nation cage (double unit): $300-$500',
+        'Custom fleece liner sets (multiple): $80-$150',
+        'Designer hammocks and bedding: $100-$200',
+        'High-end litter solutions: $50-$80',
+        'Automatic water system: $40-$80',
+        'Premium toy collection: $80-$150',
+        'Ferret-proofed play area setup: $100-$200',
+        'Extra cage accessories: $80-$150'
+      ],
+      savingTips: [
+        'Make DIY fleece liners from fabric store fleece ($5 vs $20)',
+        'Sew your own hammocks and sleep sacks (easy patterns online)',
+        'Buy used Ferret Nation cages (hold value well)',
+        'Use baby blankets as bedding',
+        'Make toys from safe household items (paper bags, cardboard tubes)',
+        'Buy hammocks from Etsy sellers (cheaper than pet stores)',
+        'Join ferret groups for gear swaps',
+        'Stock up on fleece during sales ($2-3/yard)'
+      ]
+    },
+    safety: {
+      tips: [
+        'Check cage daily for loose wires or sharp edges',
+        'Ensure all latches are secure (ferrets are escape artists)',
+        'Remove any toys with small parts that can be chewed off',
+        'Supervise all out-of-cage time in ferret-proofed area',
+        'Keep electrical cords out of reach',
+        'No rubber or foam toys (intestinal blockage risk)',
+        'Wash all bedding weekly to prevent illness',
+        'Provide multiple water sources in case one spills'
+      ],
+      hazards: [
+        'Rubber/foam items (blockage from chewing)',
+        'Small bar spacing issues (head/body getting stuck)',
+        'Unsecured cage doors (escape)',
+        'Wire ramps without covering (paw injuries)',
+        'Toxic plants in or near cage',
+        'Overheating (above 80°F)',
+        'Household chemicals during cleaning'
+      ],
+      emergencyPrep: [
+        'Know nearest exotic vet (ferrets need specialized care)',
+        'Keep ferret first aid kit ready',
+        'Have emergency carrier prepared',
+        'Backup water bottles in case primary spills',
+        'Emergency contact: exotic vet phone number',
+        'Ferret-proof emergency containment area',
+        'List of toxic substances for quick reference'
+      ]
+    }
+  },
+  'sugar-glider-habitat': {
+    name: 'Sugar Glider Habitat',
+    emoji: '🐿️',
+    type: 'Tall Cage',
+    minSize: '24" x 24" x 36" minimum',
+    difficulty: 'Advanced',
+    description: 'Sugar gliders are arboreal and need tall cages with lots of vertical space for gliding and climbing.',
+  },
+  'hedgehog-enclosure': {
+    name: 'Hedgehog Enclosure',
+    emoji: '🦔',
+    type: 'Floor Enclosure',
+    minSize: '2-4 square feet',
+    difficulty: 'Beginner',
+    description: 'Hedgehogs need spacious floor enclosures with proper heating and enrichment activities like wheels.',
+  },
+  'parrot-cage': {
+    name: 'Parrot Cage',
+    emoji: '🦜',
+    type: 'Bird Cage',
+    minSize: 'Varies by species',
+    difficulty: 'Intermediate to Advanced',
+    description: 'Parrots require large cages with appropriate bar spacing, perches, toys, and mental stimulation.',
+  },
+  'leopard-gecko-terrarium': {
+    name: 'Leopard Gecko Terrarium',
+    emoji: '🦎',
+    type: 'Desert Terrarium',
+    minSize: '20+ gallon tank',
+    difficulty: 'Beginner',
+    description: 'Leopard geckos thrive in simple desert setups with under-tank heating and multiple hiding spots.',
+  },
+};
+
+const setupInfo = setupData[setup] || setupData['bearded-dragon-habitat'];
+
+const keywords = `${setupInfo.name}, exotic pet setup, ${setupInfo.name} guide, habitat setup, terrarium, enclosure, ${setupInfo.type.toLowerCase()}`;
+---
+
+<BaseLayout 
+  title={setupInfo.name} 
+  description={`Complete ${setupInfo.name} setup guide: tank size, lighting, heating, substrate, budget options, and safety tips. ${setupInfo.difficulty} difficulty level.`}
+  keywords={keywords}
+>
+  <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-gray-900">Home</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li><a href="/setups/" class="hover:text-gray-900">Setup Guides</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-gray-800 font-medium">{setupInfo.name}</li>
+      </ol>
+    </nav>
+    <a href="/setups/" class="inline-flex items-center text-gray-600 hover:text-gray-800 mb-6">
+      ← Back to All Setups
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <div class="flex items-center gap-6 mb-6">
+        <div class="text-8xl">{setupInfo.emoji}</div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">{setupInfo.name}</h1>
+          <p class="text-xl text-gray-600">{setupInfo.type}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-pastel-green rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Minimum Size</div>
+          <div class="font-bold text-gray-800">{setupInfo.minSize}</div>
+        </div>
+        <div class="bg-pastel-pink rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Setup Difficulty</div>
+          <div class="font-bold text-gray-800">{setupInfo.difficulty}</div>
+        </div>
+        <div class="bg-pastel-blue rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Type</div>
+          <div class="font-bold text-gray-800">{setupInfo.type}</div>
+        </div>
+      </div>
+
+      <p class="text-lg text-gray-700 leading-relaxed">{setupInfo.description}</p>
+    </div>
+
+    <div class="space-y-6">
+      {setupInfo.enclosureDetails && (
+        <section class="bg-pastel-green rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">📦 Enclosure Size & Type</h2>
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Size Requirements</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.enclosureDetails.size.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Materials & Types</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.enclosureDetails.materials.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Essential Features</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.enclosureDetails.features.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {setupInfo.lighting && (
+        <section class="bg-pastel-blue rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">💡 Lighting Requirements</h2>
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Light Types</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.lighting.type.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Schedule</h3>
+              <p class="text-gray-700">{setupInfo.lighting.schedule}</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Bulb Information</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.lighting.bulbs.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">💡 Lighting Tips</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.lighting.tips.map(tip => (
+                  <li>{tip}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {setupInfo.heating && (
+        <section class="bg-pastel-pink rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🌡️ Heating & Temperature</h2>
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Temperature Requirements</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.heating.temperature.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Heating Equipment</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.heating.equipment.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Temperature Gradient</h3>
+              <p class="text-gray-700">{setupInfo.heating.gradient}</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">🌡️ Heating Tips</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.heating.tips.map(tip => (
+                  <li>{tip}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {setupInfo.substrate && (
+        <section class="bg-pastel-purple rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🪨 Substrate Options</h2>
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">✅ Recommended Substrates</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.substrate.recommended.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">❌ Avoid These Substrates</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.substrate.avoid.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">Depth</h3>
+              <p class="text-gray-700">{setupInfo.substrate.depth}</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">🪨 Substrate Tips</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.substrate.tips.map(tip => (
+                  <li>{tip}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {setupInfo.budget && (
+        <section class="bg-pastel-beige rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">💰 Budget Options</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-green-700 mb-3">💵 Budget Setup</h3>
+              <ul class="text-sm text-gray-700 space-y-1">
+                {setupInfo.budget.low.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-blue-700 mb-3">💰 Mid-Range Setup</h3>
+              <ul class="text-sm text-gray-700 space-y-1">
+                {setupInfo.budget.medium.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-purple-700 mb-3">💎 Premium Setup</h3>
+              <ul class="text-sm text-gray-700 space-y-1">
+                {setupInfo.budget.high.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4">
+            <h3 class="font-bold text-gray-800 mb-2">💡 Money-Saving Tips</h3>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              {setupInfo.budget.savingTips.map(tip => (
+                <li>{tip}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {setupInfo.safety && (
+        <section class="bg-red-50 border-2 border-red-200 rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-red-800 mb-4">⚠️ Safety Guidelines</h2>
+          <div class="space-y-4">
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">✅ Safety Tips</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.safety.tips.map(tip => (
+                  <li>{tip}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">🚨 Hazards to Avoid</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.safety.hazards.map(hazard => (
+                  <li>{hazard}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <h3 class="font-bold text-gray-800 mb-2">🆘 Emergency Preparedness</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-2">
+                {setupInfo.safety.emergencyPrep.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {!setupInfo.enclosureDetails && (
+        <section class="bg-pastel-green rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">📦 Required Equipment</h2>
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Enclosure</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>Tank/cage of appropriate size ({setupInfo.minSize})</li>
+                <li>Secure screen lid or locked doors</li>
+                <li>Proper ventilation</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Heating & Lighting</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>Heat source (lamp, mat, or ceramic heater)</li>
+                <li>Thermometer(s) - digital preferred</li>
+                <li>Thermostat for temperature regulation</li>
+                <li>UVB lighting (if required for species)</li>
+                <li>Timer for day/night cycles</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg text-gray-800 mb-2">Substrate & Furnishings</h3>
+              <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>Species-appropriate substrate</li>
+                <li>Hiding spots (at least 2)</li>
+                <li>Water dish</li>
+                <li>Food dish (if applicable)</li>
+                <li>Climbing branches or perches</li>
+                <li>Enrichment items</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="bg-pastel-blue rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🧹 Maintenance Schedule</h2>
+        <div class="space-y-3">
+          <div class="bg-white rounded-lg p-3">
+            <h3 class="font-bold text-gray-800">Daily</h3>
+            <ul class="list-disc list-inside text-gray-700 text-sm">
+              <li>Check temperatures and humidity</li>
+              <li>Remove feces and uneaten food</li>
+              <li>Refresh water</li>
+              <li>Observe your pet's behavior</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <h3 class="font-bold text-gray-800">Weekly</h3>
+            <ul class="list-disc list-inside text-gray-700 text-sm">
+              <li>Spot clean substrate</li>
+              <li>Clean water and food dishes thoroughly</li>
+              <li>Wipe down glass/walls</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <h3 class="font-bold text-gray-800">Monthly</h3>
+            <ul class="list-disc list-inside text-gray-700 text-sm">
+              <li>Complete substrate change (or as needed)</li>
+              <li>Deep clean entire enclosure</li>
+              <li>Check all equipment functionality</li>
+              <li>Replace worn items</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">💡 Pro Tips</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Set up the habitat 1-2 weeks before getting your pet to ensure stability</li>
+          <li>Test all equipment to confirm proper temperatures and conditions</li>
+          <li>Keep spare bulbs, thermometers, and equipment on hand</li>
+          <li>Take photos of your setup to track changes and improvements</li>
+          <li>Join species-specific communities for setup inspiration and advice</li>
+          <li>Upgrade to larger enclosures as your pet grows</li>
+          <li>Keep detailed records of temperatures, maintenance, and observations</li>
+          <li>Research your specific species - every animal has unique needs</li>
+        </ul>
+      </section>
+
+      <section class="bg-pastel-green rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Additional Resources</h2>
+        <div class="space-y-3">
+          <a href="/pets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Learn more about species-specific care
+          </a>
+          <a href="/vets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find an exotic animal veterinarian
+          </a>
+          <a href="/breeders/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find reputable breeders
+          </a>
+          <a href="/contact/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Have setup questions? Contact us
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

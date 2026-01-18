@@ -1,0 +1,723 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { state: 'new-jersey' } },
+    { params: { state: 'california' } },
+    { params: { state: 'texas' } },
+    { params: { state: 'florida' } },
+    { params: { state: 'new-york' } },
+    { params: { state: 'pennsylvania' } },
+    { params: { state: 'illinois' } },
+    { params: { state: 'ohio' } },
+    { params: { state: 'georgia' } },
+    { params: { state: 'north-carolina' } },
+    { params: { state: 'michigan' } },
+    { params: { state: 'arizona' } },
+  ];
+}
+
+const { state } = Astro.params;
+
+const stateData: Record<string, any> = {
+  'new-jersey': {
+    name: 'New Jersey',
+    abbreviation: 'NJ',
+    restrictionLevel: 'Moderate',
+    overview: 'New Jersey regulates exotic pet ownership through the Department of Health and Division of Fish and Wildlife. While not as restrictive as some states, NJ requires permits for potentially dangerous exotic animals and prohibits certain species outright.',
+    legalPets: {
+      title: 'Generally Legal Exotic Pets',
+      animals: [
+        '✅ Ball Pythons and most non-venomous snakes',
+        '✅ Bearded Dragons and most common lizards',
+        '✅ Leopard Geckos and Crested Geckos',
+        '✅ Corn Snakes and King Snakes',
+        '✅ Most parrots and parakeets',
+        '✅ Chinchillas',
+        '✅ Hedgehogs (legal as of recent legislation)',
+        '✅ Sugar Gliders (legal but controversial)',
+        '✅ Most common aquarium fish',
+        '✅ Hermit Crabs',
+      ],
+      note: 'These animals are generally legal but always verify with local municipalities as some cities/counties may have additional restrictions.',
+    },
+    permitRequired: {
+      title: 'Permit Required (Potentially Dangerous Species)',
+      animals: [
+        '⚠️ Venomous snakes - requires Venomous Snake Permit from Fish and Wildlife',
+        '⚠️ Large constrictor snakes over 6 feet',
+        '⚠️ Monitor lizards over 4 feet',
+        '⚠️ Alligators and crocodilians (extremely rare permits)',
+        '⚠️ Some large birds of prey',
+        '⚠️ Certain non-native wildlife',
+      ],
+      requirements: 'Permits require facility inspections, proof of experience, liability insurance, and annual renewal. Permit fees range from $10-100 depending on species.',
+      contact: 'NJ Division of Fish and Wildlife: (609) 292-2965',
+    },
+    bannedPets: {
+      title: 'Prohibited Exotic Animals',
+      animals: [
+        '❌ Ferrets - BANNED statewide (advocacy ongoing to change)',
+        '❌ Axolotls - classified as endangered, prohibited',
+        '❌ All primates (monkeys, lemurs, apes)',
+        '❌ Bears, wolves, big cats (lions, tigers, leopards)',
+        '❌ Skunks (even de-scented)',
+        '❌ Raccoons and coatimundis',
+        '❌ Venomous reptiles without proper permits',
+        '❌ Fennec foxes and most fox species',
+        '❌ Most exotic wild cats',
+        '❌ Certain invasive species (Burmese pythons, tegus)',
+      ],
+      penalties: 'Illegal possession can result in fines up to $1,000 per animal, confiscation, and potential criminal charges for dangerous species.',
+    },
+    cityNotes: {
+      title: 'City & County Specific Regulations',
+      notes: [
+        '🏙️ Newark - Additional restrictions on exotic birds and reptiles in multi-unit housing',
+        '🏙️ Jersey City - Requires registration for all reptiles over 6 feet',
+        '🏙️ Atlantic City - Prohibits venomous reptiles within city limits',
+        '🏙️ Camden County - Enhanced permits needed for large constrictors',
+        '🏙️ Many towns prohibit exotic pets in rental properties regardless of state law',
+      ],
+      advice: 'Always contact your local city clerk or animal control officer before acquiring an exotic pet. Homeowners associations (HOAs) may also have restrictions.',
+    },
+    officialSources: {
+      title: 'Official Government Resources',
+      sources: [
+        {
+          name: 'NJ Division of Fish and Wildlife',
+          url: 'https://www.nj.gov/dep/fgw/',
+          description: 'Primary regulatory agency for exotic wildlife permits',
+        },
+        {
+          name: 'NJ Department of Health',
+          url: 'https://www.nj.gov/health/',
+          description: 'Regulates public health aspects of exotic pet ownership',
+        },
+        {
+          name: 'NJSA 23:4-63.3 (Exotic Wildlife Law)',
+          url: 'State statute governing potentially dangerous wildlife',
+          description: 'Legal code defining prohibited and regulated species',
+        },
+      ],
+      note: 'Laws are subject to change. Last verified January 2026. Always confirm current regulations with official sources before acquiring an exotic pet.',
+    },
+  },
+  'california': {
+    name: 'California',
+    abbreviation: 'CA',
+    restrictionLevel: 'Strict',
+    overview: 'California has the most restrictive exotic pet laws in the United States, administered by the California Department of Fish and Wildlife (CDFW). The state operates on a "default ban" policy - if it\'s not explicitly allowed, it\'s prohibited. These laws stem from concerns about public safety, native ecosystems, and invasive species.',
+    legalPets: {
+      title: 'Legal Exotic Pets in California',
+      animals: [
+        '✅ Certain domesticated rodents: rats, mice, hamsters, gerbils, guinea pigs',
+        '✅ Chinchillas (domesticated)',
+        '✅ Rabbits (domesticated breeds)',
+        '✅ Most common aquarium fish',
+        '✅ Certain parrots (check specific species)',
+        '✅ Certain finches and canaries',
+        '✅ Specific reptiles: Ball Pythons, Corn Snakes, King Snakes (non-California natives)',
+        '✅ Bearded Dragons',
+        '✅ Leopard Geckos and Crested Geckos',
+        '✅ Red-Eared Slider turtles (grandfathered, no new imports)',
+      ],
+      note: 'California\'s legal pet list is limited. When in doubt, assume prohibited unless explicitly confirmed legal.',
+    },
+    permitRequired: {
+      title: 'Species Requiring Special Permits',
+      animals: [
+        '⚠️ Zoos and research facilities - Restricted Species Permit',
+        '⚠️ Educational institutions - Educational Display Permit',
+        '⚠️ Wildlife rehabilitation - Wildlife Rehabilitation Permit',
+        '⚠️ Falconry birds - Falconry License (strict requirements)',
+        '⚠️ Some native California reptiles - Scientific Collecting Permit',
+      ],
+      requirements: 'Permits are extremely difficult to obtain for private individuals. Most require professional facilities, extensive experience, and are not issued for pet ownership.',
+      contact: 'CA Dept. of Fish and Wildlife: (916) 445-0411',
+    },
+    bannedPets: {
+      title: 'Prohibited Animals (Extensive List)',
+      animals: [
+        '❌ Ferrets - BANNED (most notable prohibited pet)',
+        '❌ Axolotls - BANNED (endangered status)',
+        '❌ Hedgehogs - BANNED',
+        '❌ Sugar Gliders - BANNED',
+        '❌ Gerbils - BANNED (confusion: some sources say legal, verify)',
+        '❌ All primates (monkeys, lemurs, marmosets)',
+        '❌ Fennec foxes and all fox species',
+        '❌ All wild cats (servals, caracals, bengals with wild ancestry)',
+        '❌ Wolves, wolf-dogs, coyotes',
+        '❌ Skunks, raccoons, opossums',
+        '❌ Venomous snakes and lizards',
+        '❌ Large constrictor snakes (Burmese pythons, anacondas)',
+        '❌ Alligators, crocodiles, caimans',
+        '❌ Quaker parrots (monk parakeets) - invasive species',
+        '❌ Squirrels (even if found as babies)',
+        '❌ Most marsupials except opossums bred for research',
+      ],
+      penalties: 'Violations can result in fines from $500-$10,000 per violation, immediate confiscation of animals, and potential criminal misdemeanor charges. Animals are typically not returned to owners.',
+    },
+    cityNotes: {
+      title: 'City-Specific Regulations',
+      notes: [
+        '🏙️ Los Angeles - Additional exotic animal ordinances, enforcement strict',
+        '🏙️ San Francisco - Very strict enforcement, additional permits for reptiles',
+        '🏙️ San Diego - Enhanced restrictions near wildlife preserves',
+        '🏙️ Sacramento - County-level additional regulations on large reptiles',
+        '🏙️ All cities - Many ban exotic pets in rental properties',
+        '🏙️ Coastal cities - Extra scrutiny due to ecosystem protection',
+      ],
+      advice: 'California cities often have additional restrictions beyond state law. Animal control is very active in enforcing exotic pet bans. Out-of-state purchases attempting to bring animals into CA are illegal.',
+    },
+    officialSources: {
+      title: 'Official Government Resources',
+      sources: [
+        {
+          name: 'California Dept. of Fish and Wildlife (CDFW)',
+          url: 'https://wildlife.ca.gov/',
+          description: 'Primary regulatory agency - Restricted Species List',
+        },
+        {
+          name: 'California Code of Regulations, Title 14',
+          url: 'https://wildlife.ca.gov/Conservation/Laboratory/Wildlife-Health/Regulations',
+          description: 'Legal code defining prohibited species (CCR §671)',
+        },
+        {
+          name: 'California Dept. of Public Health',
+          url: 'https://www.cdph.ca.gov/',
+          description: 'Public health regulations for animal ownership',
+        },
+      ],
+      note: 'California laws are strictly enforced. Smuggling prohibited animals is a serious offense. Laws last verified January 2026.',
+    },
+  },
+  'texas': {
+    name: 'Texas',
+    abbreviation: 'TX',
+    restrictionLevel: 'Lenient',
+    overview: 'Texas has relatively permissive exotic pet laws compared to most states, regulated by the Texas Parks and Wildlife Department (TPWD). The state allows many exotic animals for private ownership, though dangerous wild animals require permits. Texas law focuses on public safety rather than blanket bans.',
+    legalPets: {
+      title: 'Legal Exotic Pets (Extensive List)',
+      animals: [
+        '✅ Hedgehogs - completely legal',
+        '✅ Sugar Gliders - legal statewide',
+        '✅ Ferrets - legal (except some cities)',
+        '✅ Chinchillas and degus',
+        '✅ Most reptiles: Ball Pythons, Corn Snakes, Bearded Dragons, Geckos',
+        '✅ Large constrictors (Burmese pythons, boas) - legal with restrictions',
+        '✅ Many parrot species',
+        '✅ Axolotls - LEGAL in Texas!',
+        '✅ Certain primates with permits (capuchins, marmosets)',
+        '✅ Certain exotic cats with permits (servals, savannah cats)',
+        '✅ Sloths (with proper permits)',
+        '✅ Kangaroos and wallabies (permit may be required)',
+        '✅ Certain lemur species',
+        '✅ Most turtles and tortoises',
+      ],
+      note: 'Texas is one of the most exotic-pet-friendly states, but county and city regulations may add restrictions. Always verify locally.',
+    },
+    permitRequired: {
+      title: 'Dangerous Wild Animals - Permit Required',
+      animals: [
+        '⚠️ Lions, tigers, leopards, jaguars, cougars',
+        '⚠️ Bears',
+        '⚠️ Wolves and wolf-hybrids (varies by county)',
+        '⚠️ Non-native venomous snakes',
+        '⚠️ Alligators over 6 feet',
+        '⚠️ Some primates (varies by species)',
+        '⚠️ Hyenas',
+        '⚠️ Certain large constrictor snakes over 10 feet',
+      ],
+      requirements: 'Dangerous Wild Animal Permit requires: $50-500 application fee, $100,000 liability insurance, secure facilities inspection, no prior violations. Annual renewal required.',
+      contact: 'Texas Parks and Wildlife: (512) 389-4800',
+    },
+    bannedPets: {
+      title: 'Prohibited Animals (Short List)',
+      animals: [
+        '❌ Chimpanzees and great apes (unless grandfathered)',
+        '❌ Native Texas wildlife (white-tailed deer, armadillos) without special permits',
+        '❌ Certain endangered species without USDA permits',
+        '❌ Venomous native snakes (without permits)',
+      ],
+      penalties: 'Illegal possession of dangerous animals: fines up to $10,000, confiscation, Class C misdemeanor charges. Operating without permit: up to $4,000 fine per day.',
+    },
+    cityNotes: {
+      title: 'County & City Specific Regulations',
+      notes: [
+        '🏙️ Houston - Restricts certain exotic animals, ferrets require permits',
+        '🏙️ Austin - Additional regulations on venomous reptiles',
+        '🏙️ Dallas - Prohibits certain dangerous animals within city limits',
+        '🏙️ San Antonio - Requires permits for large reptiles',
+        '🏙️ Fort Worth - Restricts wolf-dogs and certain exotics',
+        '🏙️ El Paso - Additional exotic animal ordinances',
+        '🏙️ Many counties - Regulate exotic animals differently; Houston metro area stricter',
+      ],
+      advice: 'Texas law is permissive at state level, but cities frequently override with local ordinances. Always check with your city/county animal control before purchase.',
+    },
+    officialSources: {
+      title: 'Official Government Resources',
+      sources: [
+        {
+          name: 'Texas Parks and Wildlife Department',
+          url: 'https://tpwd.texas.gov/',
+          description: 'Primary regulatory agency for exotic wildlife',
+        },
+        {
+          name: 'Texas Health and Safety Code Chapter 822',
+          url: 'Dangerous Wild Animals Act',
+          description: 'State law regulating dangerous exotic animals',
+        },
+        {
+          name: 'Texas Administrative Code Title 31',
+          url: 'Wildlife regulations and permit requirements',
+          description: 'Detailed regulations for exotic animal ownership',
+        },
+      ],
+      note: 'Texas regulations updated frequently. County and municipal laws often more restrictive than state. Last verified January 2026.',
+    },
+  },
+  'florida': {
+    name: 'Florida',
+    abbreviation: 'FL',
+    restrictionLevel: 'Moderate',
+    overview: 'Florida regulates exotic pets through the Florida Fish and Wildlife Conservation Commission (FWC). Following issues with invasive Burmese pythons and escaped exotics, Florida implemented a comprehensive Class I/II/III permit system in 2010-2011. Laws balance pet ownership with ecosystem protection.',
+    legalPets: {
+      title: 'Legal Exotic Pets (Class III - No Permit)',
+      animals: [
+        '✅ Hedgehogs - legal, no permit needed',
+        '✅ Sugar Gliders - legal, no permit required',
+        '✅ Chinchillas',
+        '✅ Ferrets - legal statewide',
+        '✅ Most common reptiles: Ball Pythons, Corn Snakes, King Snakes',
+        '✅ Bearded Dragons, Leopard Geckos, Crested Geckos',
+        '✅ Red-Eared Slider turtles (restrictions apply)',
+        '✅ Most parrots and parakeets',
+        '✅ Small rodents (hamsters, gerbils, guinea pigs)',
+        '✅ Rabbits (domesticated)',
+        '✅ Certain tropical fish',
+      ],
+      note: 'Class III animals (pose no threat to public safety or Florida ecosystems) do not require permits for personal possession.',
+    },
+    permitRequired: {
+      title: 'Class II & Class I - Permits Required',
+      animals: [
+        '⚠️ CLASS II (Personal Possession Permit): Smaller venomous snakes, certain primates, some large constrictors',
+        '⚠️ CLASS II Examples: Capuchin monkeys, marmosets, certain lemurs, king cobras under 6ft',
+        '⚠️ CLASS I (Conditional/Prohibited): Bears, big cats, crocodilians over 5ft, large primates',
+        '⚠️ CLASS I Note: Generally only for exhibitors, not personal pets',
+        '⚠️ Venomous reptiles - Class II permit required',
+        '⚠️ Burmese Pythons, African Rock Pythons - BANNED for personal ownership (grandfathered animals with permits)',
+        '⚠️ Tegu lizards - Permit required as of 2021',
+        '⚠️ Green Iguanas - Permit required in some counties due to invasiveness',
+      ],
+      requirements: 'Class II permit: $140-250 application, 1,000 hours documented experience OR training course, microchipping, detailed caging plans. Class I permits rarely issued to private individuals.',
+      contact: 'Florida FWC Captive Wildlife Office: (850) 488-6253',
+    },
+    bannedPets: {
+      title: 'Prohibited Species (High Priority List)',
+      animals: [
+        '❌ Axolotls - BANNED (considered salamander, illegal)',
+        '❌ Burmese Pythons - BANNED for new ownership',
+        '❌ African Rock Pythons - BANNED',
+        '❌ Nile Monitor lizards - BANNED (invasive)',
+        '❌ Green Anacondas over 10 feet',
+        '❌ Reticulated Pythons (certain localities)',
+        '❌ Certain invasive species: Lionfish (special rules), certain parrots',
+        '❌ Tegu lizards in certain counties',
+        '❌ Wild-caught Florida wildlife (gopher tortoises, native snakes)',
+      ],
+      penalties: 'Possession of prohibited species: up to $500 fine per animal, confiscation, criminal charges for Class I animals. Operating without permit: up to $1,000 per violation.',
+    },
+    cityNotes: {
+      title: 'County & Municipal Regulations',
+      notes: [
+        '🏙️ Miami-Dade County - STRICT: Bans most exotic pets including venomous reptiles, large constrictors',
+        '🏙️ Miami-Dade - Comprehensive Dangerous Animals Ordinance predates state law',
+        '🏙️ Monroe County (Florida Keys) - Enhanced restrictions to protect ecosystem',
+        '🏙️ Broward County - Additional permits required for certain reptiles',
+        '🏙️ Palm Beach County - Restrictions on large constrictors',
+        '🏙️ Many coastal counties - Stricter due to invasive species concerns',
+        '🏙️ Orlando area - City ordinances may prohibit certain Class II animals',
+      ],
+      advice: 'Miami-Dade County has the strictest exotic pet laws in Florida. Always verify county/city ordinances - they often supersede state law. Everglades proximity = stricter enforcement.',
+    },
+    officialSources: {
+      title: 'Official Government Resources',
+      sources: [
+        {
+          name: 'Florida Fish and Wildlife Conservation Commission (FWC)',
+          url: 'https://myfwc.com/',
+          description: 'Primary regulatory agency - Captive Wildlife webpage',
+        },
+        {
+          name: 'Florida Administrative Code 68A-6.002',
+          url: 'Classification system for captive wildlife',
+          description: 'Defines Class I, II, III species and requirements',
+        },
+        {
+          name: 'FWC Conditional/Prohibited Species List',
+          url: 'https://myfwc.com/wildlifehabitats/nonnatives/',
+          description: 'Updated list of restricted exotic species',
+        },
+      ],
+      note: 'Florida laws changed significantly 2010-2021 due to invasive species. Miami-Dade operates under separate ordinances. Last verified January 2026.',
+    },
+  },
+  'new-york': {
+    name: 'New York',
+    abbreviation: 'NY',
+    restrictionLevel: 'Strict',
+    overview: 'New York State has comprehensive exotic pet regulations administered by the Department of Environmental Conservation (DEC). While the state has moderate restrictions, New York City has some of the strictest exotic pet laws in the nation. Understanding both state and local laws is essential.',
+    legalPets: {
+      title: 'Legal Exotic Pets (NYS)',
+      animals: [
+        '✅ Chinchillas - legal statewide',
+        '✅ Hedgehogs - legal in NYS (BANNED in NYC)',
+        '✅ Sugar Gliders - legal in NYS (BANNED in NYC)',
+        '✅ Most common reptiles: Ball Pythons, Corn Snakes, King Snakes',
+        '✅ Bearded Dragons, Leopard Geckos',
+        '✅ Most parrots and parakeets',
+        '✅ Ferrets - legal in NYS (BANNED in NYC)',
+        '✅ Small rodents (hamsters, gerbils, guinea pigs)',
+        '✅ Domesticated rabbits',
+        '✅ Most aquarium fish',
+        '✅ Certain turtles (not Red-Eared Sliders in NYC)',
+      ],
+      note: 'These animals are legal at STATE level. New York City and some counties have much stricter laws. Always check local ordinances.',
+    },
+    permitRequired: {
+      title: 'Permit Required (Dangerous Wildlife)',
+      animals: [
+        '⚠️ Venomous reptiles - License to Possess required from DEC',
+        '⚠️ Large constrictors over 8 feet - Special permit',
+        '⚠️ Certain primates - Very rarely permitted',
+        '⚠️ Native NYS wildlife - Special licenses only',
+        '⚠️ Alligators and crocodilians',
+        '⚠️ Wolves, wolf-hybrids',
+        '⚠️ Some exotic birds',
+      ],
+      requirements: 'Dangerous Wildlife License requires: extensive application, facility inspection, $50-200 fee, proof of experience, liability insurance ($100,000+), annual renewal.',
+      contact: 'NYS DEC Bureau of Wildlife: (518) 402-8883',
+    },
+    bannedPets: {
+      title: 'Prohibited Animals (NYS & NYC)',
+      animals: [
+        '❌ All primates (monkeys, lemurs, apes) - NYS ban',
+        '❌ Wild cats (servals, caracals, savannah cats F1-F4)',
+        '❌ Bears, wolves (except licensed facilities)',
+        '❌ Skunks, raccoons',
+        '❌ NYC SPECIFIC BANS:',
+        '❌ Ferrets - BANNED in NYC (legal rest of state)',
+        '❌ Hedgehogs - BANNED in NYC',
+        '❌ Sugar Gliders - BANNED in NYC',
+        '❌ All venomous reptiles - BANNED in NYC',
+        '❌ Iguanas - BANNED in NYC',
+        '❌ Squirrels - BANNED in NYC',
+        '❌ Most exotic animals - NYC Health Code Article 161',
+      ],
+      penalties: 'NYC violations: $200-500 fines, immediate confiscation. NYS violations for dangerous animals: up to $1,000 fine, criminal charges for repeat offenses.',
+    },
+    cityNotes: {
+      title: 'NYC & County Specific Regulations',
+      notes: [
+        '🏙️ New York City - MOST RESTRICTIVE: NYC Health Code Article 161.01 bans most exotics',
+        '🏙️ NYC - Only dogs, cats, guinea pigs, rabbits, small birds, turtles allowed',
+        '🏙️ NYC - Ferret advocacy groups actively fighting ban (ongoing for 20+ years)',
+        '🏙️ Long Island (Nassau, Suffolk) - Additional restrictions beyond state law',
+        '🏙️ Westchester County - Enhanced exotic animal ordinances',
+        '🏙️ Buffalo - City ordinances restrict certain reptiles',
+        '🏙️ Rochester - Requires permits for large snakes',
+        '🏙️ Albany area - Relatively permissive compared to NYC',
+      ],
+      advice: 'NYC has the strictest exotic pet laws of any major U.S. city. Enforcement is active. Do NOT bring prohibited animals into NYC even temporarily. Upstate NY is significantly more permissive.',
+    },
+    officialSources: {
+      title: 'Official Government Resources',
+      sources: [
+        {
+          name: 'NYS Dept. of Environmental Conservation (DEC)',
+          url: 'https://www.dec.ny.gov/',
+          description: 'State regulatory agency for wildlife permits',
+        },
+        {
+          name: 'NYC Health Code Article 161',
+          url: 'https://www1.nyc.gov/site/doh/index.page',
+          description: 'NYC Department of Health - exotic animal regulations',
+        },
+        {
+          name: 'NYS Environmental Conservation Law 11-0512',
+          url: 'Legal code for dangerous wildlife licensing',
+          description: 'State statute governing exotic animal possession',
+        },
+      ],
+      note: 'NYC laws are strictly enforced and unlikely to change despite ongoing advocacy. NYS laws separate from NYC. Last verified January 2026.',
+    },
+  },
+  'pennsylvania': {
+    name: 'Pennsylvania',
+    abbreviation: 'PA',
+    restrictionLevel: 'Moderate',
+    overview: 'Pennsylvania requires permits for exotic wildlife, with specific regulations for different animal categories.',
+  },
+  'illinois': {
+    name: 'Illinois',
+    abbreviation: 'IL',
+    restrictionLevel: 'Moderate',
+    overview: 'Illinois has a comprehensive dangerous animal act that regulates ownership of certain exotic species.',
+  },
+  'ohio': {
+    name: 'Ohio',
+    abbreviation: 'OH',
+    restrictionLevel: 'Moderate',
+    overview: 'Ohio implemented stricter exotic pet laws in recent years, requiring permits and meeting specific care standards.',
+  },
+  'georgia': {
+    name: 'Georgia',
+    abbreviation: 'GA',
+    restrictionLevel: 'Moderate',
+    overview: 'Georgia requires permits for wild animals, with classifications for different levels of danger and care requirements.',
+  },
+  'north-carolina': {
+    name: 'North Carolina',
+    abbreviation: 'NC',
+    restrictionLevel: 'Moderate',
+    overview: 'North Carolina regulates exotic pets through permit requirements and specific housing and care standards.',
+  },
+  'michigan': {
+    name: 'Michigan',
+    abbreviation: 'MI',
+    restrictionLevel: 'Moderate',
+    overview: 'Michigan maintains a list of prohibited and restricted species, requiring permits for certain exotic animals.',
+  },
+  'arizona': {
+    name: 'Arizona',
+    abbreviation: 'AZ',
+    restrictionLevel: 'Moderate',
+    overview: 'Arizona requires special licenses for wildlife possession, with specific rules for native and non-native species.',
+  },
+};
+
+const stateInfo = stateData[state] || stateData['new-jersey'];
+
+// SEO keywords
+const keywords = `${stateInfo.name} exotic pet laws, ${stateInfo.abbreviation} pet regulations, exotic animals ${stateInfo.name}, legal exotic pets ${stateInfo.abbreviation}, exotic pet permit ${stateInfo.name}`;
+
+// Structured data for state laws
+const lawsSchema = {
+  "@context": "https://schema.org",
+  "@type": "GovernmentService",
+  "name": `${stateInfo.name} Exotic Pet Laws`,
+  "description": stateInfo.overview,
+  "areaServed": {
+    "@type": "State",
+    "name": stateInfo.name
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Exotic Pet Atlas"
+  }
+};
+---
+
+<BaseLayout 
+  title={`${stateInfo.name} Exotic Pet Laws`} 
+  description={`Complete guide to exotic pet ownership laws in ${stateInfo.name} (${stateInfo.abbreviation}). ${stateInfo.restrictionLevel} restrictions. Legal pets, permit requirements, and prohibited species.`}
+  keywords={keywords}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(lawsSchema)} />
+  
+  <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-gray-900">Home</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li><a href="/laws/" class="hover:text-gray-900">State Laws</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-gray-800 font-medium">{stateInfo.name}</li>
+      </ol>
+    </nav>
+    <a href="/laws/" class="inline-flex items-center text-gray-600 hover:text-gray-800 mb-6">
+      ← Back to All States
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <div class="flex items-center gap-6 mb-6">
+        <div class="text-8xl">📍</div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">{stateInfo.name}</h1>
+          <p class="text-xl text-gray-600">Exotic Pet Ownership Laws</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-pastel-green rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">State Code</div>
+          <div class="font-bold text-gray-800 text-2xl">{stateInfo.abbreviation}</div>
+        </div>
+        <div class={`rounded-xl p-4 ${
+          stateInfo.restrictionLevel === 'Strict' ? 'bg-pastel-pink' :
+          stateInfo.restrictionLevel === 'Moderate' ? 'bg-pastel-blue' :
+          'bg-pastel-green'
+        }`}>
+          <div class="text-sm text-gray-600 mb-1">Restriction Level</div>
+          <div class="font-bold text-gray-800">{stateInfo.restrictionLevel}</div>
+        </div>
+      </div>
+
+      <p class="text-lg text-gray-700 leading-relaxed">{stateInfo.overview}</p>
+    </div>
+
+    <div class="space-y-6">
+      {stateInfo.legalPets && (
+        <section class="bg-pastel-green rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">✅ {stateInfo.legalPets.title}</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-2">
+            {stateInfo.legalPets.animals.map(animal => (
+              <li>{animal}</li>
+            ))}
+          </ul>
+          {stateInfo.legalPets.note && (
+            <p class="text-sm text-gray-600 mt-4 italic">
+              {stateInfo.legalPets.note}
+            </p>
+          )}
+        </section>
+      )}
+
+      {stateInfo.permitRequired && (
+        <section class="bg-pastel-blue rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">⚠️ {stateInfo.permitRequired.title}</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+            {stateInfo.permitRequired.animals.map(animal => (
+              <li>{animal}</li>
+            ))}
+          </ul>
+          {stateInfo.permitRequired.requirements && (
+            <div class="bg-white rounded-xl p-4 mb-4">
+              <p class="font-semibold text-gray-800 mb-2">Permit Requirements:</p>
+              <p class="text-sm text-gray-700">{stateInfo.permitRequired.requirements}</p>
+            </div>
+          )}
+          {stateInfo.permitRequired.contact && (
+            <div class="bg-white rounded-xl p-4">
+              <p class="text-sm text-gray-700">
+                <strong>Contact:</strong> {stateInfo.permitRequired.contact}
+              </p>
+            </div>
+          )}
+        </section>
+      )}
+
+      {stateInfo.bannedPets && (
+        <section class="bg-pastel-pink rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🚫 {stateInfo.bannedPets.title}</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+            {stateInfo.bannedPets.animals.map(animal => (
+              <li>{animal}</li>
+            ))}
+          </ul>
+          {stateInfo.bannedPets.penalties && (
+            <div class="bg-white rounded-xl p-4">
+              <p class="font-semibold text-gray-800 mb-2">⚖️ Penalties:</p>
+              <p class="text-sm text-gray-700">{stateInfo.bannedPets.penalties}</p>
+            </div>
+          )}
+        </section>
+      )}
+
+      {stateInfo.cityNotes && (
+        <section class="bg-pastel-purple rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🏙️ {stateInfo.cityNotes.title}</h2>
+          <div class="space-y-3 text-gray-700">
+            {stateInfo.cityNotes.notes.map(note => (
+              <p>• {note}</p>
+            ))}
+          </div>
+          {stateInfo.cityNotes.advice && (
+            <p class="text-sm text-gray-600 mt-4 italic">
+              💡 {stateInfo.cityNotes.advice}
+            </p>
+          )}
+        </section>
+      )}
+
+      {stateInfo.officialSources && (
+        <section class="bg-white rounded-2xl p-6 shadow-lg">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 {stateInfo.officialSources.title}</h2>
+          <div class="space-y-4">
+            {stateInfo.officialSources.sources.map(source => (
+              <div class="border-l-4 border-pastel-blue pl-4">
+                <a href={source.url} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 font-semibold">
+                  {source.name} →
+                </a>
+                <p class="text-sm text-gray-600 mt-1">{source.description}</p>
+              </div>
+            ))}
+          </div>
+          {stateInfo.officialSources.note && (
+            <p class="text-sm text-gray-600 mt-4 italic">
+              {stateInfo.officialSources.note}
+            </p>
+          )}
+        </section>
+      )}
+
+      <section class="bg-pastel-purple rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🏠 Housing & Care Standards</h2>
+        <p class="text-gray-700 mb-3">
+          {stateInfo.name} may have specific requirements for housing exotic animals:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Minimum enclosure sizes based on species</li>
+          <li>Security measures to prevent escape</li>
+          <li>Environmental controls (temperature, humidity)</li>
+          <li>Veterinary care access and documentation</li>
+          <li>Public safety considerations for dangerous species</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">⚠️ Important Reminders</h2>
+        <div class="space-y-3 text-gray-700">
+          <p>
+            <strong>Local Ordinances:</strong> Counties and cities may have stricter regulations than state law. 
+            Always check with your local government before acquiring any exotic pet.
+          </p>
+          <p>
+            <strong>Landlord Approval:</strong> Even if legal, your lease agreement may prohibit exotic pets. 
+            Get written permission from your landlord.
+          </p>
+          <p>
+            <strong>Laws Change:</strong> Regulations can be updated frequently. 
+            Verify current laws before acquiring any exotic pet.
+          </p>
+          <p>
+            <strong>Veterinary Care:</strong> Ensure you have access to a veterinarian experienced with exotic animals before purchasing a pet.
+          </p>
+          <p>
+            <strong>Legal Disclaimer:</strong> This information is for educational purposes only and should not be considered legal advice. 
+            Consult with state authorities for official guidance.
+          </p>
+        </div>
+      </section>
+
+      <section class="bg-pastel-beige rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Additional Resources</h2>
+        <div class="space-y-3">
+          <a href="/pets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Browse exotic pets legal in your area
+          </a>
+          <a href="/vets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find exotic animal veterinarians
+          </a>
+          <a href="/contact/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Have questions about {stateInfo.name} laws? Contact us
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

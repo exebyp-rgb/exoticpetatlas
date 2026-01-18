@@ -1,0 +1,645 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { state: 'new-jersey' } },
+    { params: { state: 'california' } },
+    { params: { state: 'texas' } },
+    { params: { state: 'florida' } },
+    { params: { state: 'new-york' } },
+    { params: { state: 'pennsylvania' } },
+    { params: { state: 'illinois' } },
+    { params: { state: 'ohio' } },
+    { params: { state: 'georgia' } },
+    { params: { state: 'north-carolina' } },
+    { params: { state: 'michigan' } },
+    { params: { state: 'arizona' } },
+  ];
+}
+
+const { state } = Astro.params;
+
+interface Clinic {
+  name: string;
+  address: string;
+  city: string;
+  phone: string;
+  website?: string;
+  specialties: string[];
+  emergency: boolean;
+  certifications?: string[];
+}
+
+interface StateVetInfo {
+  name: string;
+  abbreviation: string;
+  vetCount: string;
+  description: string;
+  clinics?: Clinic[];
+  tips?: string[];
+}
+
+const stateData: Record<string, StateVetInfo> = {
+  'new-jersey': {
+    name: 'New Jersey',
+    abbreviation: 'NJ',
+    vetCount: '15+',
+    description: 'New Jersey has a growing network of exotic animal veterinarians serving the diverse pet community. From avian specialists in North Jersey to reptile experts in the southern regions, qualified exotic vets are available throughout the state.',
+    clinics: [
+      {
+        name: 'Garden State Exotic Animal Hospital',
+        address: '123 Route 17 North',
+        city: 'Paramus',
+        phone: '(201) 555-0123',
+        website: 'https://example.com',
+        specialties: ['Birds', 'Reptiles', 'Small Mammals', 'Ferrets'],
+        emergency: true,
+        certifications: ['ABVP - Avian', 'ABVP - Exotic Companion Mammal']
+      },
+      {
+        name: 'Princeton Avian & Exotic Veterinary Services',
+        address: '456 Nassau Street',
+        city: 'Princeton',
+        phone: '(609) 555-0456',
+        website: 'https://example.com',
+        specialties: ['Parrots', 'Sugar Gliders', 'Hedgehogs', 'Chinchillas'],
+        emergency: false,
+        certifications: ['ABVP - Avian']
+      },
+      {
+        name: 'Atlantic Coast Reptile Center',
+        address: '789 Ocean Avenue',
+        city: 'Asbury Park',
+        phone: '(732) 555-0789',
+        specialties: ['Reptiles', 'Amphibians', 'Bearded Dragons', 'Ball Pythons'],
+        emergency: true,
+        certifications: []
+      },
+      {
+        name: 'North Jersey Exotic Pet Clinic',
+        address: '321 Main Street',
+        city: 'Wayne',
+        phone: '(973) 555-0321',
+        specialties: ['Ferrets', 'Rabbits', 'Guinea Pigs', 'Birds'],
+        emergency: false,
+        certifications: ['ABVP - Exotic Companion Mammal']
+      },
+      {
+        name: 'South Jersey Avian Hospital',
+        address: '654 Cooper Street',
+        city: 'Cherry Hill',
+        phone: '(856) 555-0654',
+        website: 'https://example.com',
+        specialties: ['Birds', 'Parrots', 'Cockatiels', 'Finches'],
+        emergency: true,
+        certifications: ['ABVP - Avian']
+      }
+    ],
+    tips: [
+      'Check if the vet has experience with your specific exotic species before booking',
+      'Ask about emergency services and after-hours care availability',
+      'Verify board certifications through the American Board of Veterinary Practitioners (ABVP)',
+      'Request a tour of the facility to see equipment and cleanliness standards',
+      'Inquire about diagnostic capabilities (X-ray, ultrasound, blood work)',
+      'Ask about the vet\'s continuing education in exotic animal medicine',
+      'Many exotic vets in NJ require appointments well in advance - plan ahead for wellness checks'
+    ]
+  },
+  'california': {
+    name: 'California',
+    abbreviation: 'CA',
+    vetCount: '50+',
+    description: 'California boasts one of the largest networks of exotic animal veterinarians in the United States. With strict exotic pet regulations, the state has developed exceptional veterinary expertise in specialized care for legal exotic species.',
+    clinics: [
+      {
+        name: 'West Coast Avian & Exotic Hospital',
+        address: '1234 Sunset Boulevard',
+        city: 'Los Angeles',
+        phone: '(323) 555-1234',
+        website: 'https://example.com',
+        specialties: ['Birds', 'Reptiles', 'Chinchillas', 'Rabbits'],
+        emergency: true,
+        certifications: ['ABVP - Avian', 'ABVP - Reptile & Amphibian']
+      },
+      {
+        name: 'Bay Area Exotic Animal Veterinary Clinic',
+        address: '567 Market Street',
+        city: 'San Francisco',
+        phone: '(415) 555-0567',
+        website: 'https://example.com',
+        specialties: ['Reptiles', 'Birds', 'Small Mammals', 'Invertebrates'],
+        emergency: true,
+        certifications: ['ABVP - Reptile & Amphibian', 'ABVP - Avian']
+      },
+      {
+        name: 'San Diego Reptile Specialists',
+        address: '890 Pacific Highway',
+        city: 'San Diego',
+        phone: '(619) 555-0890',
+        specialties: ['Bearded Dragons', 'Leopard Geckos', 'Ball Pythons', 'Tortoises'],
+        emergency: false,
+        certifications: ['ABVP - Reptile & Amphibian']
+      },
+      {
+        name: 'Sacramento Avian Medical Center',
+        address: '234 Capitol Avenue',
+        city: 'Sacramento',
+        phone: '(916) 555-0234',
+        website: 'https://example.com',
+        specialties: ['Parrots', 'Cockatiels', 'Macaws', 'Conures'],
+        emergency: true,
+        certifications: ['ABVP - Avian']
+      },
+      {
+        name: 'Orange County Exotic Pet Hospital',
+        address: '678 Chapman Avenue',
+        city: 'Orange',
+        phone: '(714) 555-0678',
+        specialties: ['Rabbits', 'Guinea Pigs', 'Chinchillas', 'Hamsters'],
+        emergency: false,
+        certifications: ['ABVP - Exotic Companion Mammal']
+      },
+      {
+        name: 'Silicon Valley Reptile & Avian Care',
+        address: '345 El Camino Real',
+        city: 'Palo Alto',
+        phone: '(650) 555-0345',
+        website: 'https://example.com',
+        specialties: ['Reptiles', 'Birds', 'Amphibians'],
+        emergency: true,
+        certifications: ['ABVP - Reptile & Amphibian', 'ABVP - Avian']
+      }
+    ],
+    tips: [
+      'California vets often specialize in species that are legal in the state - confirm your pet is legal before seeking care',
+      'Many top exotic vets are affiliated with UC Davis Veterinary Medical Teaching Hospital',
+      'Emergency exotic care can be expensive in CA - consider pet insurance',
+      'Book wellness exams 2-4 weeks in advance, especially in major cities',
+      'Ask if the clinic has experience with California-specific exotic pet regulations',
+      'Some vets offer telemedicine consultations for minor concerns',
+      'Check if your vet participates in wildlife rehabilitation programs - a sign of expertise'
+    ]
+  },
+  'texas': {
+    name: 'Texas',
+    abbreviation: 'TX',
+    vetCount: '30+',
+    description: 'Texas offers extensive exotic veterinary services across the state, with many clinics in Dallas, Houston, Austin, and San Antonio.',
+  },
+  'florida': {
+    name: 'Florida',
+    abbreviation: 'FL',
+    vetCount: '40+',
+    description: 'Florida\'s warm climate and diverse exotic pet community have fostered a strong network of specialized exotic animal veterinarians. The state\'s expertise ranges from tropical birds to reptiles and small mammals.',
+    clinics: [
+      {
+        name: 'Miami Avian & Exotic Animal Hospital',
+        address: '1111 Brickell Avenue',
+        city: 'Miami',
+        phone: '(305) 555-1111',
+        website: 'https://example.com',
+        specialties: ['Parrots', 'Macaws', 'Reptiles', 'Sugar Gliders'],
+        emergency: true,
+        certifications: ['ABVP - Avian', 'ABVP - Exotic Companion Mammal']
+      },
+      {
+        name: 'Tampa Bay Reptile Veterinary Services',
+        address: '2222 Dale Mabry Highway',
+        city: 'Tampa',
+        phone: '(813) 555-2222',
+        specialties: ['Bearded Dragons', 'Ball Pythons', 'Leopard Geckos', 'Tortoises'],
+        emergency: true,
+        certifications: ['ABVP - Reptile & Amphibian']
+      },
+      {
+        name: 'Orlando Exotic Pet Center',
+        address: '3333 Orange Avenue',
+        city: 'Orlando',
+        phone: '(407) 555-3333',
+        website: 'https://example.com',
+        specialties: ['Ferrets', 'Hedgehogs', 'Chinchillas', 'Rabbits'],
+        emergency: false,
+        certifications: ['ABVP - Exotic Companion Mammal']
+      },
+      {
+        name: 'Jacksonville Avian Medical Clinic',
+        address: '4444 Atlantic Boulevard',
+        city: 'Jacksonville',
+        phone: '(904) 555-4444',
+        specialties: ['Birds', 'Parrots', 'Cockatiels', 'Conures'],
+        emergency: true,
+        certifications: ['ABVP - Avian']
+      },
+      {
+        name: 'Fort Lauderdale Exotic Animal Care',
+        address: '5555 Las Olas Boulevard',
+        city: 'Fort Lauderdale',
+        phone: '(954) 555-5555',
+        website: 'https://example.com',
+        specialties: ['Reptiles', 'Birds', 'Small Mammals', 'Amphibians'],
+        emergency: true,
+        certifications: ['ABVP - Reptile & Amphibian', 'ABVP - Avian']
+      },
+      {
+        name: 'Sarasota Exotic Veterinary Hospital',
+        address: '6666 Main Street',
+        city: 'Sarasota',
+        phone: '(941) 555-6666',
+        specialties: ['Ferrets', 'Guinea Pigs', 'Rabbits', 'Chinchillas'],
+        emergency: false,
+        certifications: []
+      }
+    ],
+    tips: [
+      'Florida has specific Class I, II, and III animal regulations - ensure your vet is familiar with your pet\'s classification',
+      'Due to Florida\'s climate, ask about parasite prevention programs for exotic pets',
+      'Many Florida exotic vets have experience with hurricane preparedness for exotic animals',
+      'Emergency exotic care is available in major cities, but rural areas may require travel',
+      'Consider vets who participate in Florida wildlife rescue - they often have broad experience',
+      'Ask about air conditioning protocols for temperature-sensitive species',
+      'Some clinics offer mobile exotic vet services in South Florida'
+    ]
+  },
+  'new-york': {
+    name: 'New York',
+    abbreviation: 'NY',
+    vetCount: '25+',
+    description: 'New York offers excellent exotic veterinary care, especially in the NYC metropolitan area and upstate regions.',
+  },
+  'pennsylvania': {
+    name: 'Pennsylvania',
+    abbreviation: 'PA',
+    vetCount: '20+',
+    description: 'Pennsylvania has well-distributed exotic veterinary services, with concentrations in Philadelphia and Pittsburgh areas.',
+  },
+  'illinois': {
+    name: 'Illinois',
+    abbreviation: 'IL',
+    vetCount: '20+',
+    description: 'Illinois provides comprehensive exotic pet care, particularly in the Chicago metropolitan area.',
+  },
+  'ohio': {
+    name: 'Ohio',
+    abbreviation: 'OH',
+    vetCount: '18+',
+    description: 'Ohio has quality exotic animal veterinarians in major cities including Columbus, Cleveland, and Cincinnati.',
+  },
+  'georgia': {
+    name: 'Georgia',
+    abbreviation: 'GA',
+    vetCount: '15+',
+    description: 'Georgia offers good exotic veterinary coverage, with many specialists in the Atlanta metro area.',
+  },
+  'north-carolina': {
+    name: 'North Carolina',
+    abbreviation: 'NC',
+    vetCount: '15+',
+    description: 'North Carolina has growing exotic veterinary services, with clinics throughout major population centers.',
+  },
+  'michigan': {
+    name: 'Michigan',
+    abbreviation: 'MI',
+    vetCount: '15+',
+    description: 'Michigan provides exotic animal care through veterinarians in Detroit, Ann Arbor, and Grand Rapids regions.',
+  },
+  'arizona': {
+    name: 'Arizona',
+    abbreviation: 'AZ',
+    vetCount: '12+',
+    description: 'Arizona has specialized exotic veterinarians, primarily in Phoenix and Tucson metropolitan areas.',
+  },
+};
+
+const stateInfo = stateData[state] || stateData['new-jersey'];
+
+const keywords = `exotic vets ${stateInfo.name}, ${stateInfo.abbreviation} exotic animal veterinarian, exotic pet vet ${stateInfo.name}, avian vet, reptile vet, ABVP certified`;
+---
+
+<BaseLayout 
+  title={`${stateInfo.name} Exotic Veterinarians`} 
+  description={`Find ABVP-certified exotic animal veterinarians in ${stateInfo.name}. Directory of specialized clinics for birds, reptiles, small mammals, and exotic pets.`}
+  keywords={keywords}
+>
+  <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-gray-900">Home</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li><a href="/vets/" class="hover:text-gray-900">Exotic Vets</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-gray-800 font-medium">{stateInfo.name}</li>
+      </ol>
+    </nav>
+    <a href="/vets/" class="inline-flex items-center text-gray-600 hover:text-gray-800 mb-6">
+      ← Back to All States
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <div class="flex items-center gap-6 mb-6">
+        <div class="text-8xl">🏥</div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">{stateInfo.name}</h1>
+          <p class="text-xl text-gray-600">Exotic Animal Veterinarians</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-pastel-green rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">State</div>
+          <div class="font-bold text-gray-800 text-2xl">{stateInfo.abbreviation}</div>
+        </div>
+        <div class="bg-pastel-blue rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Veterinarians Listed</div>
+          <div class="font-bold text-gray-800">{stateInfo.vetCount}</div>
+        </div>
+      </div>
+
+      <p class="text-lg text-gray-700 leading-relaxed">{stateInfo.description}</p>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Featured Exotic Veterinarians</h2>
+      
+      {stateInfo.clinics && stateInfo.clinics.length > 0 ? (
+        <>
+          <p class="text-sm text-gray-600 mb-6 italic">
+            Note: These are example listings for demonstration purposes. Always verify credentials and services directly with the clinic.
+          </p>
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {stateInfo.clinics.map(clinic => (
+              <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                  <h3 class="text-xl font-bold text-gray-800 flex-1">
+                    {clinic.name}
+                  </h3>
+                  {clinic.emergency && (
+                    <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-1 rounded ml-2 whitespace-nowrap">
+                      Emergency
+                    </span>
+                  )}
+                </div>
+                
+                <div class="space-y-2 text-gray-700 mb-4">
+                  <p class="flex items-start">
+                    <span class="mr-2">📍</span>
+                    <span>
+                      {clinic.address}<br/>
+                      {clinic.city}, {stateInfo.abbreviation}
+                    </span>
+                  </p>
+                  <p class="flex items-center">
+                    <span class="mr-2">📞</span>
+                    <span>{clinic.phone}</span>
+                  </p>
+                  {clinic.website && (
+                    <p class="flex items-center">
+                      <span class="mr-2">🌐</span>
+                      <a href={clinic.website} class="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer">
+                        Visit Website →
+                      </a>
+                    </p>
+                  )}
+                </div>
+
+                {clinic.certifications && clinic.certifications.length > 0 && (
+                  <div class="mb-4">
+                    <p class="font-semibold text-gray-800 text-sm mb-2">🏆 Certifications:</p>
+                    <div class="flex flex-wrap gap-2">
+                      {clinic.certifications.map(cert => (
+                        <span class="bg-pastel-green text-gray-800 text-xs px-2 py-1 rounded">
+                          {cert}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div>
+                  <p class="font-semibold text-gray-800 text-sm mb-2">🐾 Specialties:</p>
+                  <div class="flex flex-wrap gap-2">
+                    {clinic.specialties.map(specialty => (
+                      <span class="bg-pastel-blue text-gray-800 text-xs px-2 py-1 rounded">
+                        {specialty}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div class="space-y-4">
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-1">{stateInfo.name} Exotic Animal Hospital</h3>
+                <p class="text-gray-600">📍 Major City, {stateInfo.abbreviation}</p>
+              </div>
+              <span class="bg-pastel-pink px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                24/7 Emergency
+              </span>
+            </div>
+            
+            <div class="mb-3">
+              <h4 class="text-sm font-semibold text-gray-600 mb-2">Specialties:</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Reptiles</span>
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Birds</span>
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Small Mammals</span>
+              </div>
+            </div>
+            
+            <div class="flex gap-4 mt-4">
+              <button class="bg-pastel-blue hover:bg-blue-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                View Details
+              </button>
+              <button class="bg-pastel-beige hover:bg-yellow-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                Get Directions
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-1">Advanced Avian & Exotic Care</h3>
+                <p class="text-gray-600">📍 Suburban Area, {stateInfo.abbreviation}</p>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h4 class="text-sm font-semibold text-gray-600 mb-2">Specialties:</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Birds</span>
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Reptiles</span>
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">Amphibians</span>
+              </div>
+            </div>
+            
+            <div class="flex gap-4 mt-4">
+              <button class="bg-pastel-blue hover:bg-blue-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                View Details
+              </button>
+              <button class="bg-pastel-beige hover:bg-yellow-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                Get Directions
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-1">All Creatures Veterinary Center</h3>
+                <p class="text-gray-600">📍 Urban Area, {stateInfo.abbreviation}</p>
+              </div>
+              <span class="bg-pastel-pink px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                24/7 Emergency
+              </span>
+            </div>
+            
+            <div class="mb-3">
+              <h4 class="text-sm font-semibold text-gray-600 mb-2">Specialties:</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm text-gray-700">All Exotic Species</span>
+              </div>
+            </div>
+            
+            <div class="flex gap-4 mt-4">
+              <button class="bg-pastel-blue hover:bg-blue-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                View Details
+              </button>
+              <button class="bg-pastel-beige hover:bg-yellow-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                Get Directions
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div class="mt-6 bg-pastel-beige rounded-xl p-6">
+        <p class="text-sm text-gray-700">
+          <strong>Note:</strong> This is a sample listing. For a complete, up-to-date directory of exotic animal veterinarians in {stateInfo.name}, 
+          please contact your state's veterinary medical association or use online veterinary directories.
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      {stateInfo.tips && stateInfo.tips.length > 0 && (
+        <section class="bg-pastel-beige rounded-2xl p-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">💡 Tips for Choosing an Exotic Vet in {stateInfo.name}</h2>
+          <ul class="space-y-3 text-gray-700">
+            {stateInfo.tips.map(tip => (
+              <li class="flex items-start">
+                <span class="text-pastel-purple mr-3 mt-1 text-xl">✓</span>
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section class="bg-pastel-purple rounded-2xl p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🔍 What to Ask When Calling</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+          <div>
+            <h3 class="font-bold mb-3">About Experience:</h3>
+            <ul class="space-y-2 text-sm">
+              <li>• Do you treat [your specific species]?</li>
+              <li>• How many years of exotic animal experience?</li>
+              <li>• Are you board-certified in exotic medicine?</li>
+              <li>• Do you attend exotic animal conferences?</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-3">About Services:</h3>
+            <ul class="space-y-2 text-sm">
+              <li>• What diagnostic equipment do you have?</li>
+              <li>• Do you offer emergency services?</li>
+              <li>• Can you perform surgery on exotic pets?</li>
+              <li>• Do you have exotic animal hospitalization?</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-3">About Logistics:</h3>
+            <ul class="space-y-2 text-sm">
+              <li>• What are your appointment wait times?</li>
+              <li>• Do you accept pet insurance?</li>
+              <li>• What are typical exam costs?</li>
+              <li>• Do you offer payment plans?</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-3">Red Flags to Avoid:</h3>
+            <ul class="space-y-2 text-sm">
+              <li>• "We treat all animals" without exotic training</li>
+              <li>• No diagnostic equipment for exotics</li>
+              <li>• Unwilling to provide references</li>
+              <li>• No emergency backup plan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-pastel-green rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🔍 How to Find the Right Vet</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Ask for recommendations from exotic pet breeders or local reptile/bird clubs</li>
+          <li>Check if the vet is board-certified in exotic companion mammal medicine (ABVP)</li>
+          <li>Inquire about their experience with your specific species</li>
+          <li>Visit the clinic to assess cleanliness and equipment</li>
+          <li>Ask about emergency services and after-hours care</li>
+          <li>Request an initial consultation before an emergency arises</li>
+        </ul>
+      </section>
+
+      <section class="bg-pastel-pink rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">💰 Cost Considerations</h2>
+        <p class="text-gray-700 mb-3">
+          Exotic veterinary care can be more expensive than traditional pet care:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Routine exams: $50-$150+</li>
+          <li>Specialized diagnostics: $100-$500+</li>
+          <li>Surgeries: $200-$2,000+</li>
+          <li>Emergency visits: $150-$500+ initial fee</li>
+        </ul>
+        <p class="text-sm text-gray-600 mt-3 italic">
+          💡 Consider exotic pet insurance or set aside an emergency fund for veterinary care.
+        </p>
+      </section>
+
+      <section class="bg-pastel-blue rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 Board Certifications to Look For</h2>
+        <p class="text-gray-700 mb-3">The American Board of Veterinary Practitioners (ABVP) offers specializations in:</p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Avian Practice</strong> - Specialization in birds of all types</li>
+          <li><strong>Exotic Companion Mammal</strong> - Ferrets, rabbits, rodents, sugar gliders, hedgehogs</li>
+          <li><strong>Reptile & Amphibian Practice</strong> - Snakes, lizards, turtles, frogs</li>
+        </ul>
+        <p class="text-sm text-gray-600 mt-3">
+          Board-certified vets have completed rigorous training and examinations in their specialty.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Additional Resources</h2>
+        <div class="space-y-3">
+          <a href="/pets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Learn about care requirements for your pet
+          </a>
+          <a href={`/laws/${state}/`} class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Check {stateInfo.name} exotic pet laws
+          </a>
+          <a href="/contact/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Suggest a veterinarian to add to our directory
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const states = [
+  { name: 'New Jersey', slug: 'new-jersey', abbreviation: 'NJ' },
+  { name: 'California', slug: 'california', abbreviation: 'CA' },
+  { name: 'Texas', slug: 'texas', abbreviation: 'TX' },
+  { name: 'Florida', slug: 'florida', abbreviation: 'FL' },
+  { name: 'New York', slug: 'new-york', abbreviation: 'NY' },
+  { name: 'Pennsylvania', slug: 'pennsylvania', abbreviation: 'PA' },
+  { name: 'Illinois', slug: 'illinois', abbreviation: 'IL' },
+  { name: 'Ohio', slug: 'ohio', abbreviation: 'OH' },
+  { name: 'Georgia', slug: 'georgia', abbreviation: 'GA' },
+  { name: 'North Carolina', slug: 'north-carolina', abbreviation: 'NC' },
+  { name: 'Michigan', slug: 'michigan', abbreviation: 'MI' },
+  { name: 'Arizona', slug: 'arizona', abbreviation: 'AZ' },
+];
+---
+
+<BaseLayout title="Exotic Animal Veterinarians" description="Find qualified exotic animal veterinarians who specialize in the care of exotic pets by state.">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Find Exotic Animal Veterinarians</h1>
+    
+    <div class="bg-pastel-green rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">🏥 Specialized Veterinary Care</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        Exotic pets require specialized veterinary care from professionals trained in their unique needs. 
+        Not all veterinarians treat exotic animals, so it's essential to find one with appropriate experience.
+      </p>
+      <p class="text-gray-700 mb-4">
+        Browse our directory of exotic animal veterinarians by state to find qualified care providers near you.
+      </p>
+      <div class="bg-white rounded-xl p-4 mt-4">
+        <h3 class="font-bold text-gray-800 mb-2">What to Look For:</h3>
+        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+          <li>Board certification in exotic animal medicine (ABVP)</li>
+          <li>Experience with your specific species</li>
+          <li>24/7 emergency services or referral network</li>
+          <li>Modern diagnostic equipment</li>
+          <li>Clear communication and willingness to educate owners</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Select Your State</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {states.map(state => (
+        <a href={`/vets/${state.slug}/`} class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-105">
+          <div class="text-4xl mb-3 text-center">🏥</div>
+          <h3 class="text-xl font-bold text-gray-800 text-center mb-1">{state.name}</h3>
+          <p class="text-gray-600 text-center text-sm">{state.abbreviation}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 bg-pastel-blue rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">When to Visit an Exotic Vet</h2>
+      <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+        <div>
+          <h3 class="font-bold text-lg mb-2">Regular Check-ups</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Annual wellness exams</li>
+            <li>Fecal testing for parasites</li>
+            <li>Diet and nutrition consultation</li>
+            <li>Nail/beak trims if needed</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-2">Emergency Signs</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Loss of appetite or lethargy</li>
+            <li>Difficulty breathing</li>
+            <li>Unusual behavior or hiding</li>
+            <li>Visible injuries or wounds</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-pastel-pink rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Before Your First Visit</h2>
+      <p class="text-gray-700 mb-4">Prepare for your exotic pet's veterinary appointment:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <li>Bring photos of the animal's habitat and setup</li>
+        <li>Document their diet and feeding schedule</li>
+        <li>Note any behavioral changes or concerns</li>
+        <li>Bring fresh fecal samples if requested</li>
+        <li>Have vaccination records if applicable</li>
+        <li>Transport safely in appropriate carrier</li>
+      </ul>
+    </div>
+
+    <div class="mt-8 bg-white rounded-2xl p-8 shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Don't See Your State?</h2>
+      <p class="text-gray-700 mb-4">
+        We're continuously expanding our veterinary directory. 
+        <a href="/contact/" class="text-blue-600 hover:underline font-semibold">Contact us</a> to suggest exotic animal veterinarians in your area.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

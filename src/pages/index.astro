@@ -1,23 +1,138 @@
 ---
-import SEOLayout from '../layouts/SEOLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import StructuredData from '../components/StructuredData.astro';
 
+// Structured data for homepage
 const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'ExoticPetAtlas',
-  url: 'https://exoticpetatlas.com',
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Exotic Pet Atlas",
+  "url": "https://exoticpetatlas.com",
+  "logo": "https://exoticpetatlas.com/logo.png",
+  "description": "Comprehensive guide to exotic pet ownership, care, regulations, and resources",
+  "sameAs": [
+    "https://facebook.com/exoticpetatlas",
+    "https://twitter.com/exoticpetatlas"
+  ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Exotic Pet Atlas",
+  "url": "https://exoticpetatlas.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://exoticpetatlas.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
 };
 ---
 
-<SEOLayout
-  title="ExoticPetAtlas"
-  description="USA exotic pet atlas & care guides - comprehensive information about exotic pets, their care, and state-specific regulations."
+<BaseLayout 
+  title="Home" 
+  description="Discover comprehensive guides for exotic pet ownership including care guides, state laws, veterinarians, breeders, and habitat setups. Your trusted resource for responsible exotic pet ownership."
+  keywords="exotic pets, exotic animals, pet care guides, exotic pet laws, exotic vets, pet breeders, habitat setup, bearded dragon, axolotl, ferret, sugar glider, reptile care"
+  ogType="website"
 >
   <StructuredData data={organizationSchema} />
-  
-  <main class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-4">Exotic Peta Atlas</h1>
-    <p class="text-lg">Welcome to Exotic Peta Atlas - USA exotic pet atlas & care guides.</p>
-  </main>
-</SEOLayout>
+  <StructuredData data={websiteSchema} />
+  <!-- Hero Section -->
+  <section class="text-center mb-16">
+    <h1 class="text-5xl font-bold text-gray-800 mb-6">
+      Welcome to Exotic Pet Atlas 🐾
+    </h1>
+    <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+      Your comprehensive guide to exotic pet ownership, care, regulations, and resources. 
+      Discover everything you need to know about exotic pets, from legal requirements to finding the perfect vet.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/pets/" class="bg-pastel-green hover:bg-green-300 text-gray-800 font-bold py-3 px-8 rounded-full transition shadow-lg">
+        Browse Pets
+      </a>
+      <a href="/laws/" class="bg-pastel-pink hover:bg-pink-300 text-gray-800 font-bold py-3 px-8 rounded-full transition shadow-lg">
+        Check Laws
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+    <!-- Pets Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">🦎</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">Exotic Pets</h2>
+      <p class="text-gray-700 mb-4">
+        Explore detailed guides for a wide variety of exotic pets including reptiles, amphibians, birds, and small mammals.
+      </p>
+      <a href="/pets/" class="text-pastel-green font-semibold hover:underline">Learn More →</a>
+    </div>
+
+    <!-- Laws Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">⚖️</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">State Laws</h2>
+      <p class="text-gray-700 mb-4">
+        Stay informed about exotic pet regulations and legal requirements in your state before bringing home a new companion.
+      </p>
+      <a href="/laws/" class="text-pastel-green font-semibold hover:underline">Check Laws →</a>
+    </div>
+
+    <!-- Vets Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">🏥</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">Veterinarians</h2>
+      <p class="text-gray-700 mb-4">
+        Find qualified exotic animal veterinarians in your area who specialize in the care of your unique pet.
+      </p>
+      <a href="/vets/" class="text-pastel-green font-semibold hover:underline">Find Vets →</a>
+    </div>
+
+    <!-- Breeders Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">🏡</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">Breeders</h2>
+      <p class="text-gray-700 mb-4">
+        Connect with reputable exotic pet breeders who prioritize animal health and ethical breeding practices.
+      </p>
+      <a href="/breeders/" class="text-pastel-green font-semibold hover:underline">Find Breeders →</a>
+    </div>
+
+    <!-- Setups Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">🏠</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">Care Setups</h2>
+      <p class="text-gray-700 mb-4">
+        Get detailed habitat setup guides, equipment recommendations, and care tips for your exotic pet species.
+      </p>
+      <a href="/setups/" class="text-pastel-green font-semibold hover:underline">View Setups →</a>
+    </div>
+
+    <!-- Contact Card -->
+    <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+      <div class="text-5xl mb-4">💬</div>
+      <h2 class="text-2xl font-bold text-gray-800 mb-3">Get in Touch</h2>
+      <p class="text-gray-700 mb-4">
+        Have questions or suggestions? We'd love to hear from you and help you on your exotic pet journey.
+      </p>
+      <a href="/contact/" class="text-pastel-green font-semibold hover:underline">Contact Us →</a>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-pastel-blue rounded-3xl p-12 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">
+      Start Your Exotic Pet Journey Today
+    </h2>
+    <p class="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
+      Whether you're a first-time exotic pet owner or an experienced enthusiast, 
+      Exotic Pet Atlas has the resources and information you need for responsible pet ownership.
+    </p>
+    <a href="/pets/" class="inline-block bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-8 rounded-full transition shadow-lg">
+      Explore All Pets
+    </a>
+  </section>
+</BaseLayout>

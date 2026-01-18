@@ -1,0 +1,703 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { animal: 'axolotl' } },
+    { params: { animal: 'ferret' } },
+    { params: { animal: 'fennec-fox' } },
+    { params: { animal: 'bearded-dragon' } },
+    { params: { animal: 'sugar-glider' } },
+    { params: { animal: 'hedgehog' } },
+    { params: { animal: 'ball-python' } },
+    { params: { animal: 'chinchilla' } },
+    { params: { animal: 'gecko' } },
+    { params: { animal: 'parrot' } },
+    { params: { animal: 'iguana' } },
+    { params: { animal: 'tarantula' } },
+    { params: { animal: 'corn-snake' } },
+  ];
+}
+
+const { animal } = Astro.params;
+
+const petData: Record<string, any> = {
+  'axolotl': {
+    name: 'Axolotl',
+    emoji: '🦎',
+    scientificName: 'Ambystoma mexicanum',
+    lifespan: '10-15 years',
+    size: '9-12 inches',
+    difficulty: 'Intermediate',
+    description: 'Axolotls are fascinating aquatic salamanders from Mexico, known for their remarkable ability to regenerate limbs and their permanent larval features. These unique creatures have captured the hearts of exotic pet enthusiasts worldwide.',
+    habitat: {
+      title: 'Aquatic Habitat Requirements',
+      requirements: [
+        'Minimum 20-gallon long aquarium (29+ gallons recommended for adults)',
+        'Water temperature: 60-64°F (15-18°C) - cold water is essential!',
+        'Aquarium chiller often necessary to maintain proper temperature',
+        'Fine sand substrate or bare bottom (avoid gravel - choking hazard)',
+        'Low-flow filtration to avoid stress from strong currents',
+        'Hiding spots like caves, PVC pipes, or aquarium-safe decorations',
+        'No substrate smaller than their head to prevent impaction',
+        'Dim lighting - axolotls are sensitive to bright light',
+      ],
+      tips: 'Water quality is critical! Perform 20-30% water changes weekly. Use a water conditioner to remove chlorine and chloramines. Cycled tank is essential before adding your axolotl.',
+    },
+    diet: {
+      title: 'Carnivorous Diet & Feeding',
+      foods: [
+        'Earthworms (nightcrawlers) - primary staple food',
+        'Bloodworms (frozen or live) - occasional treats',
+        'Brine shrimp - for juveniles',
+        'Salmon pellets specifically formulated for axolotls',
+        'Small pieces of raw shrimp or fish (occasional)',
+        'Blackworms as protein-rich treats',
+      ],
+      schedule: 'Adults: Feed every 2-3 days. Juveniles: Daily feeding. Remove uneaten food after 15-20 minutes to prevent water quality issues.',
+      avoid: 'Never feed: processed meats, feeder fish (disease risk), food larger than the space between their eyes.',
+    },
+    health: {
+      title: 'Health Care & Common Issues',
+      tips: [
+        'Monitor water parameters religiously: ammonia 0ppm, nitrite 0ppm, nitrate <20ppm',
+        'Watch for fluffy white growths (fungus) - treat immediately with salt baths',
+        'Floating = gas/bloating - often from poor water quality or overfeeding',
+        'Curled tail tip can indicate stress or poor water conditions',
+        'Check gills regularly - should be fluffy and red/pink',
+        'Cloudy eyes often indicate bacterial infection - consult exotic vet',
+        'Never handle with dry hands - use wet hands or soft net only when necessary',
+      ],
+      warning: 'Axolotls have very sensitive skin. Avoid medications containing copper or any products not specifically safe for amphibians.',
+    },
+    legal: {
+      title: 'Legal Status in the USA',
+      status: 'Legal in most states with notable EXCEPTIONS',
+      restrictions: [
+        '❌ ILLEGAL in California - strict ban, no permits available',
+        '❌ ILLEGAL in Maine - classified as endangered/prohibited',
+        '❌ ILLEGAL in New Jersey - requires difficult-to-obtain permit',
+        '❌ ILLEGAL in Virginia - banned as invasive species',
+        '❌ ILLEGAL in Washington D.C.',
+        '⚠️ Special permits required in New Mexico',
+        '✅ Legal in most other U.S. states',
+      ],
+      advice: 'Always verify current local and state laws before purchasing. Penalties for illegal ownership can include hefty fines and confiscation.',
+    },
+    mistakes: {
+      title: 'Common Beginner Mistakes to Avoid',
+      errors: [
+        '❌ Keeping water too warm - leads to stress, disease, and shortened lifespan',
+        '❌ Using gravel substrate - causes impaction which can be fatal',
+        '❌ Handling too frequently - damages their delicate slime coat',
+        '❌ Cohabitation - axolotls are cannibalistic and will bite each other',
+        '❌ Strong filtration - causes stress from excessive water movement',
+        '❌ Tap water without conditioning - chlorine is toxic to axolotls',
+        '❌ Overfeeding - leads to obesity and water quality problems',
+        '❌ Not cycling the tank - ammonia poisoning is a common cause of death',
+        '❌ Using decorations with sharp edges - can injure their soft skin',
+        '❌ Insufficient hiding spaces - creates constant stress',
+      ],
+      advice: 'Research thoroughly before purchase. Axolotls are easier to care for than many people think, but their specific temperature requirements can be challenging in warm climates.',
+    },
+  },
+  'ferret': {
+    name: 'Ferret',
+    emoji: '🦦',
+    scientificName: 'Mustela putorius furo',
+    lifespan: '6-10 years',
+    size: '13-16 inches (plus 5" tail)',
+    difficulty: 'Intermediate',
+    description: 'Ferrets are highly intelligent, playful carnivores that have been domesticated for over 2,500 years. These curious and energetic companions require significant daily interaction, mental stimulation, and a commitment to "ferret-proofing" your home.',
+    habitat: {
+      title: 'Housing & Environment',
+      requirements: [
+        'Multi-level cage minimum 24"L x 24"W x 36"H (bigger is always better)',
+        'Bar spacing no wider than 1 inch to prevent escapes',
+        'Multiple hammocks, tubes, and sleeping areas',
+        'Litter box in each level (ferrets can be litter trained)',
+        'Food and water bowls or bottles (heavy ceramic preferred)',
+        'Temperature: 60-75°F - ferrets are sensitive to heat',
+        'Daily supervised out-of-cage time: minimum 4+ hours',
+        'Dedicated "ferret-proof" room or supervised free-roam time',
+      ],
+      tips: 'Ferrets are NOT cage animals! They need extensive time outside their enclosure to explore, play, and bond with you. A bored ferret is a destructive ferret.',
+    },
+    diet: {
+      title: 'Carnivorous Nutrition',
+      foods: [
+        'High-quality ferret kibble (32-38% protein, 15-20% fat)',
+        'Raw meat diet: chicken, turkey, rabbit, lamb',
+        'Whole prey: mice, chicks (frozen-thawed)',
+        'Raw eggs as occasional treats',
+        'Salmon oil supplement for coat health',
+        'High-quality kitten food as a substitute if ferret food unavailable',
+      ],
+      schedule: 'Free-feeding recommended - ferrets have fast metabolisms. Ensure food is always available. Fresh water must be accessible 24/7.',
+      avoid: 'NO fruits, vegetables, grains, dairy, or sweets. Ferrets are obligate carnivores and cannot digest plant matter. Avoid dog food - insufficient protein.',
+    },
+    health: {
+      title: 'Health Care & Veterinary Needs',
+      tips: [
+        'Annual vet check-ups with an exotic-savvy veterinarian',
+        'Distemper and rabies vaccinations (check local requirements)',
+        'Spaying/neutering recommended (reduces odor and health risks)',
+        'Adrenal disease is common - watch for hair loss and lethargy',
+        'Insulinoma (pancreatic tumors) - monitor for weakness and seizures',
+        'Dental care: regular teeth cleaning, watch for tartar buildup',
+        'Nail trimming every 2-3 weeks',
+        'Ear cleaning monthly to prevent mites',
+      ],
+      warning: 'Ferrets are prone to several serious health conditions as they age. Budget for potential veterinary costs including surgeries. Pet insurance recommended.',
+    },
+    legal: {
+      title: 'Legal Status in the USA',
+      status: 'Legal in most states with significant exceptions',
+      restrictions: [
+        '❌ ILLEGAL in California - strict ban with hefty fines',
+        '❌ ILLEGAL in Hawaii - biosecurity concerns',
+        '❌ ILLEGAL in Washington D.C.',
+        '⚠️ NEW YORK CITY - banned within city limits (legal in rest of NY state)',
+        '⚠️ Some local ordinances prohibit ferrets even in legal states',
+        '✅ Legal and common as pets in most U.S. states',
+        '⚠️ Some states require rabies vaccination and permits',
+      ],
+      advice: 'Check county and city ordinances in addition to state law. Some areas have breed-specific restrictions or require licenses.',
+    },
+    mistakes: {
+      title: 'Common Beginner Mistakes to Avoid',
+      errors: [
+        '❌ Underestimating time commitment - ferrets need 4+ hours daily interaction',
+        '❌ Inadequate ferret-proofing - they will find and squeeze into everything',
+        '❌ Keeping only one ferret - they are social and thrive in pairs',
+        '❌ Using wood shavings/cedar bedding - causes respiratory issues',
+        '❌ Expecting ferrets to use litter boxes 100% - accidents happen',
+        '❌ Not researching ferret-specific vets beforehand',
+        '❌ Feeding inappropriate foods like fruits or vegetables',
+        '❌ Bathing too frequently - strips natural oils and increases odor',
+        '❌ Ignoring their natural musky smell - bathing doesn\'t eliminate it',
+        '❌ Not budgeting for veterinary care - ferrets have expensive health needs',
+      ],
+      advice: 'Ferrets are high-maintenance pets with specific needs. They are not suitable for children without adult supervision. Be prepared for their mischievous nature and destructive tendencies.',
+    },
+  },
+  'fennec-fox': {
+    name: 'Fennec Fox',
+    emoji: '🦊',
+    scientificName: 'Vulpes zerda',
+    lifespan: '10-14 years',
+    size: '9-16 inches (body), 7-8 inch tail',
+    difficulty: 'Advanced',
+    description: 'Fennec foxes are the smallest fox species, native to the Sahara Desert. With their distinctive oversized ears and adorable appearance, they have become increasingly popular as exotic pets. However, they are wild animals with complex needs and challenging behaviors.',
+    habitat: {
+      title: 'Specialized Housing Requirements',
+      requirements: [
+        'Large outdoor enclosure: minimum 200+ square feet with 6+ foot fencing',
+        'Dig-proof barriers: extend fence 3+ feet underground or use cement base',
+        'Climbing deterrents: fennecs are excellent climbers and jumpers',
+        'Indoor space: dedicated "fennec-proof" room for inclement weather',
+        'Temperature tolerance: 50-90°F (adapted to desert climate)',
+        'Sand or dirt area for natural digging behavior',
+        'Multiple hiding spots, tunnels, and enrichment',
+        'Secure latches - they are escape artists!',
+        'Shade areas and water access at all times',
+      ],
+      tips: 'Fennec foxes cannot be truly domesticated and retain wild instincts. They are nocturnal, extremely energetic, and VERY vocal. Not suitable for apartment living!',
+    },
+    diet: {
+      title: 'Omnivorous Diet with Protein Focus',
+      foods: [
+        'High-quality dog food (grain-free, high protein)',
+        'Raw or cooked chicken, turkey, eggs',
+        'Insects: crickets, mealworms, superworms',
+        'Small amounts of fruits: berries, melon, apples',
+        'Vegetables: sweet potato, carrots, peas (small amounts)',
+        'Mice or rats (frozen-thawed) as occasional treats',
+        'Commercial exotic carnivore diet supplements',
+      ],
+      schedule: 'Feed once daily in the evening (they are nocturnal). Provide 1-2 cups of food mixture. Adjust based on activity level and body condition.',
+      avoid: 'Avoid: grapes, chocolate, caffeine, onions, garlic, processed foods, excessive fruits (can cause diarrhea).',
+    },
+    health: {
+      title: 'Health Care & Specialized Needs',
+      tips: [
+        'Find an exotic vet experienced with foxes BEFORE getting a fennec',
+        'Annual veterinary examinations essential',
+        'Vaccinations: consult vet (rabies vaccination protocols vary)',
+        'Parasite prevention: deworm regularly, flea/tick prevention',
+        'Dental health: provide appropriate chew items',
+        'Monitor weight - obesity is common in captivity',
+        'Watch for respiratory issues in humid climates',
+        'Ensure adequate taurine in diet for heart health',
+      ],
+      warning: 'Limited veterinary knowledge exists for fennec fox care. Medical treatment can be extremely expensive and difficult to find. Not all vets will treat fennecs.',
+    },
+    legal: {
+      title: 'Legal Status in the USA - HIGHLY RESTRICTED',
+      status: 'ILLEGAL or heavily regulated in most states',
+      restrictions: [
+        '❌ ILLEGAL: Arkansas, Arizona (without permit), California, Colorado, Connecticut, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maryland, Massachusetts, Michigan (no permit issued), Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, Tennessee, Utah, Vermont, Virginia, Washington, Wisconsin',
+        '⚠️ PERMIT REQUIRED: Arkansas, Florida, Indiana, Michigan, Mississippi, Nebraska, North Carolina, North Dakota, Ohio, Oklahoma, South Dakota, Tennessee, Texas (varies by county)',
+        '⚠️ Some states allow with USDA exhibitor license only',
+        '✅ Legal states are VERY LIMITED and often require permits',
+      ],
+      advice: 'Fennec fox ownership is one of the most restrictive exotic pets. Even where legal, permits often require inspections, insurance, and significant fees. Always check federal, state, county, AND city laws.',
+    },
+    mistakes: {
+      title: 'Common Beginner Mistakes to Avoid',
+      errors: [
+        '❌ Underestimating how LOUD they are - piercing screams at night',
+        '❌ Thinking they can be housebroken - fennecs are difficult/impossible to fully litter train',
+        '❌ Not securing outdoor enclosure properly - they are master escape artists',
+        '❌ Expecting dog or cat-like behavior - they are wild animals',
+        '❌ Inadequate socialization - requires daily handling from young age',
+        '❌ Not providing enough space - fennecs need room to run and dig',
+        '❌ Purchasing illegally without proper permits',
+        '❌ Not researching veterinary care availability',
+        '❌ Underestimating the smell - they have a strong musky odor',
+        '❌ Impulse purchase based on cute appearance - they are very challenging pets',
+      ],
+      advice: 'Fennec foxes are NOT recommended for first-time exotic pet owners. They require experienced handlers, significant financial resources, appropriate housing, and a lifestyle that accommodates their nocturnal, vocal nature. Consider volunteering at a wildlife sanctuary first to understand their needs.',
+    },
+  },
+  'bearded-dragon': {
+    name: 'Bearded Dragon',
+    emoji: '🦎',
+    scientificName: 'Pogona vitticeps',
+    lifespan: '10-15 years (up to 20 with excellent care)',
+    size: '16-24 inches',
+    difficulty: 'Beginner',
+    description: 'Bearded dragons are one of the most popular pet reptiles, and for good reason! Native to Australia, these gentle, docile lizards are known for their calm temperament, interesting behaviors like "arm waving" and "head bobbing," and their relatively easy care requirements compared to other reptiles.',
+    habitat: {
+      title: 'Desert Terrarium Setup',
+      requirements: [
+        'Tank size: 40-gallon breeder minimum for juveniles, 75-120 gallons for adults',
+        'Basking spot: 95-105°F (35-40°C)',
+        'Cool side: 75-85°F (24-29°C)',
+        'Nighttime: 65-75°F (18-24°C) - no heating usually needed',
+        'UVB lighting: 10-12% UVB tube light, 10-12 hours daily (ESSENTIAL!)',
+        'Basking light: heat lamp or ceramic heat emitter',
+        'Substrate: tile, newspaper, reptile carpet (avoid sand for juveniles)',
+        'Branches for climbing and basking',
+        'Hide boxes on both warm and cool sides',
+        'Shallow water dish (they often defecate in water)',
+      ],
+      tips: 'UVB lighting is NON-NEGOTIABLE! Without it, bearded dragons develop metabolic bone disease (MBD). Replace UVB bulbs every 6-12 months even if they still emit visible light.',
+    },
+    diet: {
+      title: 'Omnivorous Diet (Changes with Age)',
+      foods: [
+        'JUVENILES (0-12 months): 80% insects, 20% vegetables',
+        'ADULTS (12+ months): 80% vegetables, 20% insects',
+        'Insects: dubia roaches, crickets, hornworms, black soldier fly larvae',
+        'Vegetables: collard greens, mustard greens, turnip greens, butternut squash',
+        'Occasional fruits: berries, melon, mango (treats only)',
+        'Dust insects with calcium powder (without D3) daily',
+        'Vitamin supplement with D3 2-3 times per week',
+      ],
+      schedule: 'Juveniles: Feed insects 2-3 times daily, offer fresh veggies daily. Adults: Insects 3-4 times per week, fresh vegetables daily.',
+      avoid: 'NEVER feed: avocado (toxic), fireflies (deadly), wild-caught insects (pesticides), spinach, rhubarb, lettuce (no nutrition).',
+    },
+    health: {
+      title: 'Health Monitoring & Care',
+      tips: [
+        'Watch for metabolic bone disease: twitching, paralysis, soft jaw',
+        'Monitor for impaction: swollen belly, lack of defecation',
+        'Check for respiratory infections: wheezing, mucus, open-mouth breathing',
+        'Observe eating habits - loss of appetite indicates illness',
+        'Provide proper shedding support - humid hide box',
+        'Trim nails as needed (usually monthly)',
+        'Annual vet check-up with reptile-experienced veterinarian',
+        'Monitor weight - obesity is common in adults',
+      ],
+      warning: 'Metabolic bone disease (MBD) is preventable with proper UVB and calcium supplementation. Once developed, it can cause permanent deformities.',
+    },
+    legal: {
+      title: 'Legal Status in the USA',
+      status: 'LEGAL in all 50 states!',
+      restrictions: [
+        '✅ Legal everywhere in the United States',
+        '✅ No permits or licenses required',
+        '✅ Can be transported across state lines',
+        '⚠️ Always check local city/county ordinances',
+        '⚠️ Some HOAs may have exotic pet restrictions',
+        '✅ One of the most legally accessible reptiles',
+      ],
+      advice: 'While legal everywhere, verify with landlords if renting. Some apartments prohibit reptiles regardless of legality.',
+    },
+    mistakes: {
+      title: 'Common Beginner Mistakes to Avoid',
+      errors: [
+        '❌ No UVB lighting or using incorrect UVB strength - causes MBD',
+        '❌ Tank too small - stunts growth and causes stress',
+        '❌ Using sand substrate for juveniles - causes impaction',
+        '❌ Cohabitation - bearded dragons are solitary and will fight',
+        '❌ Feeding insects too large - rule: nothing bigger than space between eyes',
+        '❌ Inadequate temperatures - invest in good thermometers',
+        '❌ Not providing variety in vegetables',
+        '❌ Over-supplementing or under-supplementing calcium',
+        '❌ Handling too much when newly acquired - allow 1-2 weeks to settle',
+        '❌ Using heat rocks - can cause severe burns',
+      ],
+      advice: 'Bearded dragons are excellent beginner reptiles IF proper research is done. They are forgiving of minor mistakes but require consistent care. Start with proper setup before bringing your dragon home!',
+    },
+  },
+  'sugar-glider': {
+    name: 'Sugar Glider',
+    emoji: '🐿️',
+    scientificName: 'Petaurus breviceps',
+    lifespan: '12-15 years in captivity',
+    size: '5-6 inches (body), 6-7 inch tail',
+    difficulty: 'Advanced',
+    description: 'Sugar gliders are small, nocturnal marsupials native to Australia, Indonesia, and Papua New Guinea. These social, tree-dwelling animals can glide up to 150 feet using the membrane between their limbs. While adorable and fascinating, they are demanding pets requiring significant time, knowledge, and commitment.',
+    habitat: {
+      title: 'Arboreal Cage Requirements',
+      requirements: [
+        'Cage minimum: 24"L x 24"W x 36"H (taller is better - they are arboreal)',
+        'Bar spacing: no more than 1/2 inch to prevent escapes',
+        'Multiple levels with branches, ropes, and climbing opportunities',
+        'Sleeping pouch - essential for daytime sleeping',
+        'Nest box or additional pouches',
+        'Exercise wheel: 12-15 inch diameter, solid surface (no mesh)',
+        'Room temperature: 70-90°F (gliders are sensitive to cold)',
+        'Multiple feeding stations',
+        'Toys for enrichment: ladders, tunnels, foraging toys',
+      ],
+      tips: 'Sugar gliders are NOCTURNAL and VERY ACTIVE at night. Expect noise! They need a dedicated room or space where nighttime activity won\'t disturb sleep. Daily out-of-cage time in a glider-safe room is essential.',
+    },
+    diet: {
+      title: 'Complex Nutritional Requirements',
+      foods: [
+        'Follow established diet plans: BML (Bourbon\'s Modified Leadbeater\'s), TPG, OHPW',
+        'Fresh fruits: apples, grapes, melon, papaya (variety is key)',
+        'Fresh vegetables: sweet potato, carrots, green beans',
+        'Protein: boiled chicken, scrambled eggs, mealworms, crickets',
+        'Calcium supplement: glider-specific or calcium powder',
+        'Avoid pre-made "sugar glider food" - often inadequate',
+        'Nectar and sap sources in the wild - replicate with approved diets',
+      ],
+      schedule: 'Feed in the evening before they wake. Remove uneaten fresh food in the morning. Always provide fresh water.',
+      avoid: 'TOXIC: chocolate, caffeine, onions, garlic, grapes (in large quantities), processed foods, bird seed mixes marketed for gliders (nutritionally incomplete).',
+    },
+    health: {
+      title: 'Health Care & Common Issues',
+      tips: [
+        'Find a sugar glider-experienced exotic vet BEFORE purchase',
+        'Metabolic bone disease from calcium deficiency - ensure proper diet',
+        'Obesity from inappropriate diet - monitor weight',
+        'Self-mutilation from stress or boredom - provide companionship',
+        'Dental issues - provide safe chew items',
+        'Parasites - annual fecal exams recommended',
+        'Nail trimming every 2-3 weeks',
+        'Depression from loneliness - gliders should NOT be kept alone',
+      ],
+      warning: 'Sugar gliders are HIGHLY SOCIAL and can become depressed, self-mutilate, or die from loneliness. They should be kept in pairs or groups.',
+    },
+    legal: {
+      title: 'Legal Status in the USA',
+      status: 'Legal in many states but with significant restrictions',
+      restrictions: [
+        '❌ ILLEGAL: Alaska, California, Hawaii',
+        '❌ ILLEGAL in some cities: New York City (NYC), St. Paul (MN)',
+        '⚠️ PERMIT REQUIRED: Pennsylvania (free permit), Massachusetts',
+        '⚠️ Georgia - legal but cannot be imported',
+        '✅ Legal in most other states',
+        '⚠️ Check city and county ordinances even in legal states',
+      ],
+      advice: 'Laws are subject to change. Verify current regulations with your state\'s Department of Agriculture or Wildlife department. Never purchase without confirming legality.',
+    },
+    mistakes: {
+      title: 'Common Beginner Mistakes to Avoid',
+      errors: [
+        '❌ Keeping a single glider - they NEED companionship (same-sex pairs or neutered male with females)',
+        '❌ Expecting daytime interaction - they are strictly nocturnal',
+        '❌ Inadequate bonding time - requires weeks/months of daily pouching',
+        '❌ Poor diet - nutritional deficiencies lead to serious health problems',
+        '❌ Cage too small or lacking vertical space',
+        '❌ Not glider-proofing room before free-roam time',
+        '❌ Expecting them to be quiet - they bark, crab, and make various noises',
+        '❌ Handling with unclean hands - they can become ill from human bacteria',
+        '❌ Not understanding the 15-year commitment',
+        '❌ Impulse purchase without proper research',
+      ],
+      advice: 'Sugar gliders are NOT beginner pets despite their small size. They require specialized diets, expensive veterinary care, constant companionship (yours or another glider), and a lifestyle that accommodates their nocturnal nature. Only consider if you can commit to their complex needs for 15+ years.',
+    },
+  },
+  'sugar-glider': {
+    name: 'Sugar Glider',
+    emoji: '🐿️',
+    scientificName: 'Petaurus breviceps',
+    lifespan: '10-15 years',
+    size: '5-6 inches',
+    difficulty: 'Advanced',
+    description: 'Sugar gliders are small, nocturnal marsupials that can glide through the air and form strong bonds with their owners.',
+  },
+  'hedgehog': {
+    name: 'Hedgehog',
+    emoji: '🦔',
+    scientificName: 'Atelerix albiventris',
+    lifespan: '4-7 years',
+    size: '5-8 inches',
+    difficulty: 'Beginner',
+    description: 'African Pygmy Hedgehogs are small, quiet insectivores with adorable spines and curious personalities.',
+  },
+  'ball-python': {
+    name: 'Ball Python',
+    emoji: '🐍',
+    scientificName: 'Python regius',
+    lifespan: '20-30 years',
+    size: '3-5 feet',
+    difficulty: 'Beginner',
+    description: 'Ball pythons are docile, low-maintenance snakes that come in a stunning variety of colors and patterns.',
+  },
+  'chinchilla': {
+    name: 'Chinchilla',
+    emoji: '🐭',
+    scientificName: 'Chinchilla lanigera',
+    lifespan: '10-20 years',
+    size: '9-15 inches',
+    difficulty: 'Intermediate',
+    description: 'Chinchillas have incredibly soft fur and are active, social rodents requiring specific temperature and housing conditions.',
+  },
+  'gecko': {
+    name: 'Leopard Gecko',
+    emoji: '🦎',
+    scientificName: 'Eublepharis macularius',
+    lifespan: '10-20 years',
+    size: '7-10 inches',
+    difficulty: 'Beginner',
+    description: 'Leopard geckos are hardy, easy-to-care-for lizards with beautiful spotted patterns and docile temperaments.',
+  },
+  'parrot': {
+    name: 'Parrot',
+    emoji: '🦜',
+    scientificName: 'Psittaciformes',
+    lifespan: '20-80 years',
+    size: 'Varies by species',
+    difficulty: 'Advanced',
+    description: 'Parrots are highly intelligent, social birds requiring extensive daily interaction and mental stimulation.',
+  },
+  'iguana': {
+    name: 'Green Iguana',
+    emoji: '🦎',
+    scientificName: 'Iguana iguana',
+    lifespan: '12-20 years',
+    size: '4-6 feet',
+    difficulty: 'Advanced',
+    description: 'Green iguanas are large herbivorous lizards requiring substantial space and specialized care as they grow.',
+  },
+  'tarantula': {
+    name: 'Tarantula',
+    emoji: '🕷️',
+    scientificName: 'Theraphosidae',
+    lifespan: '5-30 years (varies)',
+    size: '4-10 inches leg span',
+    difficulty: 'Intermediate',
+    description: 'Tarantulas are low-maintenance arachnids perfect for those fascinated by invertebrates.',
+  },
+  'corn-snake': {
+    name: 'Corn Snake',
+    emoji: '🐍',
+    scientificName: 'Pantherophis guttatus',
+    lifespan: '15-20 years',
+    size: '3-5 feet',
+    difficulty: 'Beginner',
+    description: 'Corn snakes are colorful, docile constrictors ideal for first-time snake owners.',
+  },
+};
+
+const pet = petData[animal] || petData['axolotl'];
+
+// Generate SEO-friendly keywords
+const keywords = `${pet.name}, ${pet.scientificName}, exotic pet care, ${pet.name} habitat, ${pet.name} diet, ${pet.name} legal, exotic ${pet.difficulty.toLowerCase()} pet`;
+
+// Structured data for the pet
+const petSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": `${pet.name} Care Guide`,
+  "description": pet.description,
+  "author": {
+    "@type": "Organization",
+    "name": "Exotic Pet Atlas"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Exotic Pet Atlas",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://exoticpetatlas.com/logo.png"
+    }
+  },
+  "datePublished": "2026-01-18",
+  "dateModified": "2026-01-18"
+};
+---
+
+<BaseLayout 
+  title={pet.name} 
+  description={`Complete care guide for ${pet.name} (${pet.scientificName}). Learn about habitat, diet, health, legal considerations, and common mistakes. ${pet.difficulty} difficulty level.`}
+  keywords={keywords}
+  ogType="article"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(petSchema)} />
+  
+  <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="/" class="hover:text-gray-900">Home</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li><a href="/pets/" class="hover:text-gray-900">Pets</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-gray-800 font-medium">{pet.name}</li>
+      </ol>
+    </nav>
+    <a href="/pets/" class="inline-flex items-center text-gray-600 hover:text-gray-800 mb-6">
+      ← Back to All Pets
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <div class="flex items-center gap-6 mb-6">
+        <div class="text-8xl">{pet.emoji}</div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">{pet.name}</h1>
+          <p class="text-xl text-gray-600 italic">{pet.scientificName}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-pastel-green rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Lifespan</div>
+          <div class="font-bold text-gray-800">{pet.lifespan}</div>
+        </div>
+        <div class="bg-pastel-pink rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Size</div>
+          <div class="font-bold text-gray-800">{pet.size}</div>
+        </div>
+        <div class="bg-pastel-blue rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Care Level</div>
+          <div class="font-bold text-gray-800">{pet.difficulty}</div>
+        </div>
+        <div class="bg-pastel-purple rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Type</div>
+          <div class="font-bold text-gray-800">Exotic Pet</div>
+        </div>
+      </div>
+
+      <p class="text-lg text-gray-700 leading-relaxed">{pet.description}</p>
+    </div>
+
+    <div class="space-y-6">
+      {/* Habitat Section */}
+      {pet.habitat && (
+        <section class="bg-pastel-green rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🏠 {pet.habitat.title}</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+            {pet.habitat.requirements.map((req: string) => (
+              <li>{req}</li>
+            ))}
+          </ul>
+          <div class="bg-white rounded-xl p-4 mt-4">
+            <p class="text-sm text-gray-700"><strong>💡 Pro Tip:</strong> {pet.habitat.tips}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Diet Section */}
+      {pet.diet && (
+        <section class="bg-pastel-pink rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">🍽️ {pet.diet.title}</h2>
+          <h3 class="font-bold text-gray-800 mb-2">Recommended Foods:</h3>
+          <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+            {pet.diet.foods.map((food: string) => (
+              <li>{food}</li>
+            ))}
+          </ul>
+          <div class="bg-white rounded-xl p-4 mb-3">
+            <h4 class="font-bold text-gray-800 mb-1">Feeding Schedule:</h4>
+            <p class="text-sm text-gray-700">{pet.diet.schedule}</p>
+          </div>
+          <div class="bg-red-50 border-l-4 border-red-400 p-4">
+            <p class="text-sm text-gray-700"><strong>⚠️ Avoid:</strong> {pet.diet.avoid}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Health Section */}
+      {pet.health && (
+        <section class="bg-pastel-blue rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">⚕️ {pet.health.title}</h2>
+          <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+            {pet.health.tips.map((tip: string) => (
+              <li>{tip}</li>
+            ))}
+          </ul>
+          {pet.health.warning && (
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
+              <p class="text-sm text-gray-700"><strong>⚠️ Important Warning:</strong> {pet.health.warning}</p>
+            </div>
+          )}
+          <a href="/vets/" class="inline-block mt-4 text-blue-600 hover:underline font-semibold">
+            Find an exotic animal vet →
+          </a>
+        </section>
+      )}
+
+      {/* Legal Section */}
+      {pet.legal && (
+        <section class="bg-pastel-purple rounded-2xl p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">⚖️ {pet.legal.title}</h2>
+          <div class="bg-white rounded-xl p-4 mb-4">
+            <p class="font-bold text-gray-800 mb-2">Status: <span class={pet.legal.status.includes('ILLEGAL') ? 'text-red-600' : 'text-green-600'}>{pet.legal.status}</span></p>
+          </div>
+          <ul class="space-y-2 text-gray-700 mb-4">
+            {pet.legal.restrictions.map((restriction: string) => (
+              <li class="bg-white rounded-lg p-3">{restriction}</li>
+            ))}
+          </ul>
+          <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+            <p class="text-sm text-gray-700"><strong>📌 Advice:</strong> {pet.legal.advice}</p>
+          </div>
+          <a href="/laws/" class="inline-block mt-4 text-blue-600 hover:underline font-semibold">
+            Check state laws →
+          </a>
+        </section>
+      )}
+
+      {/* Beginner Mistakes Section */}
+      {pet.mistakes && (
+        <section class="bg-red-50 rounded-2xl p-6 border-2 border-red-200">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">⚠️ {pet.mistakes.title}</h2>
+          <ul class="space-y-2 text-gray-700 mb-4">
+            {pet.mistakes.errors.map((error: string) => (
+              <li class="bg-white rounded-lg p-3">{error}</li>
+            ))}
+          </ul>
+          <div class="bg-green-50 border-l-4 border-green-400 p-4">
+            <p class="text-sm text-gray-700"><strong>✅ Our Advice:</strong> {pet.mistakes.advice}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Additional Resources */}
+      <section class="bg-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Additional Resources</h2>
+        <div class="space-y-3">
+          <a href="/setups/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Browse habitat setup guides
+          </a>
+          <a href="/breeders/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find reputable breeders
+          </a>
+          <a href="/vets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find exotic animal veterinarians in your area
+          </a>
+          <a href="/contact/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Have questions? Contact us
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

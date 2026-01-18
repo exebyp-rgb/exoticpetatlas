@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const states = [
+  { name: 'New Jersey', slug: 'new-jersey', abbreviation: 'NJ' },
+  { name: 'California', slug: 'california', abbreviation: 'CA' },
+  { name: 'Texas', slug: 'texas', abbreviation: 'TX' },
+  { name: 'Florida', slug: 'florida', abbreviation: 'FL' },
+  { name: 'New York', slug: 'new-york', abbreviation: 'NY' },
+  { name: 'Pennsylvania', slug: 'pennsylvania', abbreviation: 'PA' },
+  { name: 'Illinois', slug: 'illinois', abbreviation: 'IL' },
+  { name: 'Ohio', slug: 'ohio', abbreviation: 'OH' },
+  { name: 'Georgia', slug: 'georgia', abbreviation: 'GA' },
+  { name: 'North Carolina', slug: 'north-carolina', abbreviation: 'NC' },
+  { name: 'Michigan', slug: 'michigan', abbreviation: 'MI' },
+  { name: 'Arizona', slug: 'arizona', abbreviation: 'AZ' },
+];
+---
+
+<BaseLayout title="Exotic Pet Breeders" description="Find reputable exotic pet breeders who prioritize animal health and ethical breeding practices.">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Find Exotic Pet Breeders</h1>
+    
+    <div class="bg-pastel-pink rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">🏡 Responsible Breeding Matters</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        Finding a reputable breeder is crucial for getting a healthy, well-socialized exotic pet. 
+        Ethical breeders prioritize animal welfare, genetic health, and proper early socialization.
+      </p>
+      <p class="text-gray-700 mb-4">
+        Browse our directory to find responsible exotic pet breeders in your state.
+      </p>
+      <div class="bg-white rounded-xl p-4 mt-4">
+        <h3 class="font-bold text-gray-800 mb-2">Red Flags to Avoid:</h3>
+        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+          <li>Unwillingness to show breeding facilities</li>
+          <li>Multiple species bred with little specialization</li>
+          <li>No health guarantees or veterinary records</li>
+          <li>Pressure to buy immediately</li>
+          <li>No questions about your preparedness or living situation</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Select Your State</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {states.map(state => (
+        <a href={`/breeders/${state.slug}/`} class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-105">
+          <div class="text-4xl mb-3 text-center">🏡</div>
+          <h3 class="text-xl font-bold text-gray-800 text-center mb-1">{state.name}</h3>
+          <p class="text-gray-600 text-center text-sm">{state.abbreviation}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 bg-pastel-blue rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">What Makes a Reputable Breeder?</h2>
+      <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+        <div>
+          <h3 class="font-bold text-lg mb-2">✅ Good Signs</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Specializes in one or few species</li>
+            <li>Welcomes facility tours</li>
+            <li>Provides health certificates</li>
+            <li>Offers ongoing support</li>
+            <li>Asks YOU many questions</li>
+            <li>Has references available</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-2">❌ Warning Signs</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Won't show where animals are kept</li>
+            <li>Animals seem unhealthy or stressed</li>
+            <li>No paperwork or guarantees</li>
+            <li>Selling very young animals</li>
+            <li>Always has animals available</li>
+            <li>Prices seem too good to be true</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-pastel-green rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Questions to Ask a Breeder</h2>
+      <p class="text-gray-700 mb-4">Before purchasing from a breeder, ask these important questions:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <li>How long have you been breeding this species?</li>
+        <li>Can I see the parents and your breeding facility?</li>
+        <li>What health testing do you perform on breeding animals?</li>
+        <li>What health guarantee do you provide?</li>
+        <li>Will you provide veterinary records and care instructions?</li>
+        <li>Do you offer support after purchase?</li>
+        <li>What if I can no longer care for the animal?</li>
+      </ul>
+    </div>
+
+    <div class="mt-8 bg-white rounded-2xl p-8 shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Consider Adoption First</h2>
+      <p class="text-gray-700 mb-4">
+        Before purchasing from a breeder, consider adopting from a rescue organization. 
+        Many exotic pets need loving homes due to owner surrender or rescue situations.
+      </p>
+      <p class="text-gray-700">
+        Adoption can be more affordable and gives an animal in need a second chance.
+      </p>
+    </div>
+
+    <div class="mt-8 bg-pastel-beige rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Don't See Your State?</h2>
+      <p class="text-gray-700 mb-4">
+        We're continuously expanding our breeder directory. 
+        <a href="/contact/" class="text-blue-600 hover:underline font-semibold">Contact us</a> to recommend responsible breeders in your area.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

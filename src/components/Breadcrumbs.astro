@@ -1,0 +1,52 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  currentPage: string;
+}
+
+const { items, currentPage } = Astro.props;
+
+// Build structured data for breadcrumbs
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    "item": `https://exoticpetatlas.com${item.href}`
+  })).concat([{
+    "@type": "ListItem",
+    "position": items.length + 1,
+    "name": currentPage,
+  }])
+};
+---
+
+<nav aria-label="Breadcrumb" class="mb-6">
+  <ol class="flex items-center space-x-2 text-sm text-gray-600">
+    {items.map((item, index) => (
+      <li class="flex items-center">
+        {index > 0 && <span class="mx-2 text-gray-400">/</span>}
+        <a 
+          href={item.href} 
+          class="hover:text-gray-900 transition"
+          itemprop="item"
+        >
+          <span itemprop="name">{item.label}</span>
+        </a>
+      </li>
+    ))}
+    <li class="flex items-center">
+      <span class="mx-2 text-gray-400">/</span>
+      <span class="text-gray-800 font-medium" aria-current="page">{currentPage}</span>
+    </li>
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

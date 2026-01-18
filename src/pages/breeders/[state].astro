@@ -1,0 +1,289 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { state: 'new-jersey' } },
+    { params: { state: 'california' } },
+    { params: { state: 'texas' } },
+    { params: { state: 'florida' } },
+    { params: { state: 'new-york' } },
+    { params: { state: 'pennsylvania' } },
+    { params: { state: 'illinois' } },
+    { params: { state: 'ohio' } },
+    { params: { state: 'georgia' } },
+    { params: { state: 'north-carolina' } },
+    { params: { state: 'michigan' } },
+    { params: { state: 'arizona' } },
+  ];
+}
+
+const { state } = Astro.params;
+
+const stateData: Record<string, any> = {
+  'new-jersey': {
+    name: 'New Jersey',
+    abbreviation: 'NJ',
+    breederCount: '20+',
+    description: 'New Jersey has a variety of reputable exotic pet breeders specializing in reptiles, birds, and small mammals.',
+  },
+  'california': {
+    name: 'California',
+    abbreviation: 'CA',
+    breederCount: '50+',
+    description: 'California has one of the largest exotic pet breeding communities in the US, with strict regulations ensuring quality.',
+  },
+  'texas': {
+    name: 'Texas',
+    abbreviation: 'TX',
+    breederCount: '40+',
+    description: 'Texas offers extensive exotic breeding operations, particularly for reptiles and exotic birds.',
+  },
+  'florida': {
+    name: 'Florida',
+    abbreviation: 'FL',
+    breederCount: '60+',
+    description: 'Florida has a thriving exotic breeding industry, with many breeders specializing in reptiles and tropical birds.',
+  },
+  'new-york': {
+    name: 'New York',
+    abbreviation: 'NY',
+    breederCount: '25+',
+    description: 'New York has quality exotic pet breeders, particularly in upstate regions and around NYC.',
+  },
+  'pennsylvania': {
+    name: 'Pennsylvania',
+    abbreviation: 'PA',
+    breederCount: '30+',
+    description: 'Pennsylvania has well-established breeding programs for various exotic species.',
+  },
+  'illinois': {
+    name: 'Illinois',
+    abbreviation: 'IL',
+    breederCount: '20+',
+    description: 'Illinois breeders focus on responsible breeding practices for exotic mammals and reptiles.',
+  },
+  'ohio': {
+    name: 'Ohio',
+    abbreviation: 'OH',
+    breederCount: '18+',
+    description: 'Ohio has experienced breeders specializing in various exotic species.',
+  },
+  'georgia': {
+    name: 'Georgia',
+    abbreviation: 'GA',
+    breederCount: '25+',
+    description: 'Georgia offers diverse exotic breeding options, particularly for reptiles and birds.',
+  },
+  'north-carolina': {
+    name: 'North Carolina',
+    abbreviation: 'NC',
+    breederCount: '20+',
+    description: 'North Carolina has growing exotic breeding community with focus on ethical practices.',
+  },
+  'michigan': {
+    name: 'Michigan',
+    abbreviation: 'MI',
+    breederCount: '15+',
+    description: 'Michigan breeders provide quality exotic pets with emphasis on health and socialization.',
+  },
+  'arizona': {
+    name: 'Arizona',
+    abbreviation: 'AZ',
+    breederCount: '15+',
+    description: 'Arizona has specialized breeders, particularly for desert-adapted reptiles.',
+  },
+};
+
+const stateInfo = stateData[state] || stateData['new-jersey'];
+
+// Sample breeders (in a real app, this would come from a database)
+const sampleBreeders = [
+  {
+    name: `${stateInfo.name} Reptile Specialists`,
+    location: 'Northern Region',
+    specialties: ['Ball Pythons', 'Bearded Dragons', 'Leopard Geckos'],
+    experience: '15+ years',
+    verified: true,
+  },
+  {
+    name: `Exotic Birds of ${stateInfo.abbreviation}`,
+    location: 'Central Region',
+    specialties: ['Parrots', 'Cockatiels', 'Conures'],
+    experience: '10+ years',
+    verified: true,
+  },
+  {
+    name: `Premium Exotic Mammals`,
+    location: 'Southern Region',
+    specialties: ['Sugar Gliders', 'Hedgehogs', 'Chinchillas'],
+    experience: '8+ years',
+    verified: false,
+  },
+];
+---
+
+<BaseLayout title={`${stateInfo.name} Exotic Pet Breeders`} description={`Find reputable exotic pet breeders in ${stateInfo.name}.`}>
+  <div class="max-w-4xl mx-auto">
+    <a href="/breeders/" class="inline-flex items-center text-gray-600 hover:text-gray-800 mb-6">
+      ← Back to All States
+    </a>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 mb-8">
+      <div class="flex items-center gap-6 mb-6">
+        <div class="text-8xl">🏡</div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">{stateInfo.name}</h1>
+          <p class="text-xl text-gray-600">Exotic Pet Breeders</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-pastel-green rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">State</div>
+          <div class="font-bold text-gray-800 text-2xl">{stateInfo.abbreviation}</div>
+        </div>
+        <div class="bg-pastel-blue rounded-xl p-4">
+          <div class="text-sm text-gray-600 mb-1">Breeders Listed</div>
+          <div class="font-bold text-gray-800">{stateInfo.breederCount}</div>
+        </div>
+      </div>
+
+      <p class="text-lg text-gray-700 leading-relaxed">{stateInfo.description}</p>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Featured Breeders</h2>
+      
+      <div class="space-y-4">
+        {sampleBreeders.map((breeder) => (
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-1">{breeder.name}</h3>
+                <p class="text-gray-600">📍 {breeder.location}, {stateInfo.abbreviation}</p>
+                <p class="text-sm text-gray-600 mt-1">⏰ {breeder.experience} experience</p>
+              </div>
+              {breeder.verified && (
+                <span class="bg-pastel-green px-3 py-1 rounded-full text-sm font-semibold text-gray-800">
+                  ✓ Verified
+                </span>
+              )}
+            </div>
+            
+            <div class="mb-3">
+              <h4 class="text-sm font-semibold text-gray-600 mb-2">Specializes In:</h4>
+              <div class="flex flex-wrap gap-2">
+                {breeder.specialties.map(specialty => (
+                  <span class="bg-pastel-pink px-3 py-1 rounded-full text-sm text-gray-700">
+                    {specialty}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            <div class="flex gap-4 mt-4">
+              <button class="bg-pastel-blue hover:bg-blue-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                View Profile
+              </button>
+              <button class="bg-pastel-beige hover:bg-yellow-200 px-4 py-2 rounded-lg font-semibold text-gray-800 transition">
+                Contact Breeder
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-6 bg-pastel-beige rounded-xl p-6">
+        <p class="text-sm text-gray-700">
+          <strong>Note:</strong> This is a sample listing. Before purchasing from any breeder, 
+          thoroughly research their reputation, visit their facilities, and verify their licensing and health guarantees.
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      <section class="bg-pastel-green rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">✅ Checklist Before Buying</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Visit the breeding facility in person</li>
+          <li>Meet the parents if possible</li>
+          <li>Request health certificates and veterinary records</li>
+          <li>Verify the breeder's licenses and permits (if required in {stateInfo.name})</li>
+          <li>Check online reviews and references</li>
+          <li>Ensure proper quarantine and health testing protocols</li>
+          <li>Get written health guarantees and return policies</li>
+          <li>Confirm legal ownership in your area</li>
+        </ul>
+      </section>
+
+      <section class="bg-pastel-pink rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">⚠️ Avoid Unethical Breeders</h2>
+        <p class="text-gray-700 mb-3">
+          Stay away from breeders who:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Refuse to show you their facilities</li>
+          <li>Have poor living conditions for their animals</li>
+          <li>Breed too many different species (lack of specialization)</li>
+          <li>Sell animals that are too young</li>
+          <li>Cannot provide health documentation</li>
+          <li>Don't ask about your experience or living situation</li>
+          <li>Pressure you to make immediate purchases</li>
+        </ul>
+      </section>
+
+      <section class="bg-pastel-blue rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">💰 Pricing Information</h2>
+        <p class="text-gray-700 mb-3">
+          Prices vary significantly by species, morph, and breeder reputation:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Bearded Dragons: $40-$500+</li>
+          <li>Ball Pythons: $50-$10,000+ (rare morphs)</li>
+          <li>Sugar Gliders: $150-$500+</li>
+          <li>Parrots: $200-$3,000+</li>
+          <li>Hedgehogs: $100-$300+</li>
+        </ul>
+        <p class="text-sm text-gray-600 mt-3 italic">
+          Remember: extremely low prices may indicate poor breeding practices. 
+          Higher prices often reflect quality care, health testing, and ethical breeding.
+        </p>
+      </section>
+
+      <section class="bg-pastel-purple rounded-2xl p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 Legal Considerations</h2>
+        <p class="text-gray-700 mb-3">
+          Before purchasing from a breeder in {stateInfo.name}:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Verify the species is legal to own in your county/city</li>
+          <li>Check if you need permits or licenses</li>
+          <li>Ensure the breeder has proper licensing</li>
+          <li>Understand interstate transport regulations if applicable</li>
+        </ul>
+        <a href={`/laws/${state}/`} class="inline-block mt-4 text-blue-600 hover:underline font-semibold">
+          Check {stateInfo.name} exotic pet laws →
+        </a>
+      </section>
+
+      <section class="bg-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">📚 Additional Resources</h2>
+        <div class="space-y-3">
+          <a href="/pets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Learn about specific species care
+          </a>
+          <a href="/setups/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> View habitat setup guides
+          </a>
+          <a href="/vets/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Find exotic animal veterinarians
+          </a>
+          <a href="/contact/" class="block text-gray-700 hover:text-gray-900">
+            <span class="font-semibold">→</span> Recommend a breeder
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

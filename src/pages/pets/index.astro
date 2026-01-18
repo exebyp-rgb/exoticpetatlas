@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pets = [
+  { name: 'Axolotl', emoji: '🦎', slug: 'axolotl' },
+  { name: 'Ferret', emoji: '🦦', slug: 'ferret' },
+  { name: 'Fennec Fox', emoji: '🦊', slug: 'fennec-fox' },
+  { name: 'Bearded Dragon', emoji: '🦎', slug: 'bearded-dragon' },
+  { name: 'Sugar Glider', emoji: '🐿️', slug: 'sugar-glider' },
+  { name: 'Hedgehog', emoji: '🦔', slug: 'hedgehog' },
+  { name: 'Ball Python', emoji: '🐍', slug: 'ball-python' },
+  { name: 'Chinchilla', emoji: '🐭', slug: 'chinchilla' },
+  { name: 'Gecko', emoji: '🦎', slug: 'gecko' },
+  { name: 'Parrot', emoji: '🦜', slug: 'parrot' },
+  { name: 'Iguana', emoji: '🦎', slug: 'iguana' },
+  { name: 'Tarantula', emoji: '🕷️', slug: 'tarantula' },
+  { name: 'Corn Snake', emoji: '🐍', slug: 'corn-snake' },
+];
+---
+
+<BaseLayout title="Exotic Pets" description="Browse our comprehensive guide to exotic pets including reptiles, amphibians, birds, and small mammals.">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Exotic Pets Directory</h1>
+    
+    <div class="bg-pastel-pink rounded-2xl p-8 mb-12">
+      <p class="text-lg text-gray-700 mb-4">
+        Explore our comprehensive database of exotic pets. Each species page includes care requirements, 
+        habitat needs, dietary information, legal considerations, and more.
+      </p>
+      <p class="text-gray-700">
+        Before bringing home an exotic pet, make sure to research thoroughly and verify local regulations.
+      </p>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Popular Exotic Pets</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {pets.map(pet => (
+        <a href={`/pets/${pet.slug}/`} class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-105">
+          <div class="text-5xl mb-3 text-center">{pet.emoji}</div>
+          <h3 class="text-xl font-bold text-gray-800 text-center">{pet.name}</h3>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 bg-pastel-blue rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Not Finding Your Pet?</h2>
+      <p class="text-gray-700 mb-4">
+        We're constantly expanding our database. If you don't see your exotic pet listed, 
+        please <a href="/contact/" class="text-blue-600 hover:underline font-semibold">contact us</a> with your suggestions.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

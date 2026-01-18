@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const setups = [
+  { name: 'Bearded Dragon Habitat', emoji: '🦎', slug: 'bearded-dragon-habitat', type: 'Desert Terrarium' },
+  { name: 'Ball Python Setup', emoji: '🐍', slug: 'ball-python-setup', type: 'Tropical Terrarium' },
+  { name: 'Axolotl Aquarium', emoji: '🦎', slug: 'axolotl-aquarium', type: 'Aquatic Setup' },
+  { name: 'Ferret Cage', emoji: '🦦', slug: 'ferret-cage', type: 'Multi-Level Enclosure' },
+  { name: 'Sugar Glider Habitat', emoji: '🐿️', slug: 'sugar-glider-habitat', type: 'Tall Cage' },
+  { name: 'Hedgehog Enclosure', emoji: '🦔', slug: 'hedgehog-enclosure', type: 'Floor Enclosure' },
+  { name: 'Parrot Cage', emoji: '🦜', slug: 'parrot-cage', type: 'Bird Cage' },
+  { name: 'Leopard Gecko Terrarium', emoji: '🦎', slug: 'leopard-gecko-terrarium', type: 'Desert Terrarium' },
+];
+---
+
+<BaseLayout title="Exotic Pet Care Setups" description="Comprehensive habitat setup guides and equipment recommendations for exotic pets.">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Exotic Pet Care Setups</h1>
+    
+    <div class="bg-pastel-green rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">🏠 Proper Habitat = Healthy Pet</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        Creating the right habitat is one of the most important aspects of exotic pet care. 
+        Each species has unique requirements for temperature, humidity, space, and enrichment.
+      </p>
+      <p class="text-gray-700 mb-4">
+        Our detailed setup guides will help you create the perfect environment for your exotic companion.
+      </p>
+      <div class="bg-white rounded-xl p-4 mt-4">
+        <p class="text-sm text-gray-700">
+          <strong>Important:</strong> These are general guidelines. Always research your specific species' needs 
+          and consult with an exotic animal veterinarian for personalized advice.
+        </p>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Browse Setup Guides</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {setups.map(setup => (
+        <a href={`/setups/${setup.slug}/`} class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-105">
+          <div class="text-5xl mb-3 text-center">{setup.emoji}</div>
+          <h3 class="text-xl font-bold text-gray-800 text-center mb-2">{setup.name}</h3>
+          <p class="text-gray-600 text-center text-sm">{setup.type}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 space-y-6">
+      <section class="bg-pastel-blue rounded-2xl p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Essential Setup Components</h2>
+        <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+          <div>
+            <h3 class="font-bold text-lg mb-2">🌡️ Temperature Control</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Heat lamps or under-tank heaters</li>
+              <li>Thermometers (digital recommended)</li>
+              <li>Thermostats for safety</li>
+              <li>Gradient zones (hot/cool areas)</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">💧 Humidity Management</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Hygrometers to monitor levels</li>
+              <li>Misting systems or spray bottles</li>
+              <li>Water dishes for evaporation</li>
+              <li>Substrate that retains moisture</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">💡 Lighting</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>UVB bulbs for reptiles</li>
+              <li>Day/night cycle timers</li>
+              <li>Basking lights</li>
+              <li>Full-spectrum lighting</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">🎨 Enrichment</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Hiding spots and caves</li>
+              <li>Climbing branches or platforms</li>
+              <li>Toys and foraging opportunities</li>
+              <li>Species-appropriate decorations</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-pastel-pink rounded-2xl p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Enclosure Size Guidelines</h2>
+        <p class="text-gray-700 mb-4">
+          Proper space is crucial for your pet's physical and mental well-being. 
+          Here are general minimum sizes (always go larger if possible):
+        </p>
+        <div class="space-y-2 text-gray-700">
+          <div class="bg-white rounded-lg p-3">
+            <strong>Bearded Dragon:</strong> 40-75 gallon tank (adult)
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <strong>Ball Python:</strong> 40 gallon tank minimum (larger for bigger individuals)
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <strong>Ferret:</strong> Multi-level cage, minimum 24" x 24" x 36"
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <strong>Sugar Glider:</strong> Tall cage, minimum 24" x 24" x 36"
+          </div>
+          <div class="bg-white rounded-lg p-3">
+            <strong>Hedgehog:</strong> 2-4 square feet of floor space
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-pastel-purple rounded-2xl p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">💰 Budget Planning</h2>
+        <p class="text-gray-700 mb-4">
+          Setting up an exotic pet habitat requires initial investment and ongoing costs:
+        </p>
+        <div class="space-y-3">
+          <div>
+            <h4 class="font-bold text-gray-800">Initial Setup Costs</h4>
+            <p class="text-gray-700">Enclosure, heating, lighting, substrate, decorations: $200-$1,000+</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800">Monthly Costs</h4>
+            <p class="text-gray-700">Food, electricity, substrate changes: $30-$100+</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800">Annual Costs</h4>
+            <p class="text-gray-700">Bulb replacements, equipment upgrades, vet visits: $200-$500+</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-2xl p-8 shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🛡️ Safety Considerations</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Secure lids/doors to prevent escapes</li>
+          <li>Use heat guards to prevent burns</li>
+          <li>Avoid toxic plants and materials</li>
+          <li>Ensure proper ventilation</li>
+          <li>Keep electrical cords safe and organized</li>
+          <li>Place enclosures away from drafts and direct sunlight</li>
+          <li>Use GFCI outlets near water features</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="mt-8 bg-pastel-beige rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Need Help Choosing?</h2>
+      <p class="text-gray-700 mb-4">
+        Not sure which setup is right for you? 
+        <a href="/pets/" class="text-blue-600 hover:underline font-semibold">Browse our pet directory</a> to learn about different species, 
+        or <a href="/contact/" class="text-blue-600 hover:underline font-semibold">contact us</a> with questions.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

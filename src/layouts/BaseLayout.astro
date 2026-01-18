@@ -1,0 +1,156 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const { 
+  title, 
+  description = "Exotic Pet Atlas - Your comprehensive guide to exotic pets, laws, vets, breeders, and care setups.",
+  keywords = "exotic pets, pet care, exotic animals, pet laws, exotic vets, pet breeders, animal care",
+  ogImage = "/og-image.jpg",
+  ogType = "website",
+  canonical,
+  noindex = false
+} = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
+const fullTitle = `${title} | Exotic Pet Atlas`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+    <meta property="og:site_name" content="Exotic Pet Atlas" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+    
+    <!-- Additional SEO -->
+    <meta name="author" content="Exotic Pet Atlas" />
+    <meta name="theme-color" content="#B8E6C9" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Preconnect to important domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-pastel-green shadow-md">
+        <div class="container mx-auto px-4 py-6">
+          <div class="flex items-center justify-between">
+            <a href="/" class="text-3xl font-bold text-gray-800 hover:text-gray-600 transition">
+              🐾 Exotic Pet Atlas
+            </a>
+            <nav class="hidden md:flex space-x-6">
+              <a href="/" class="text-gray-700 hover:text-gray-900 font-medium transition">Home</a>
+              <a href="/pets/" class="text-gray-700 hover:text-gray-900 font-medium transition">Pets</a>
+              <a href="/laws/" class="text-gray-700 hover:text-gray-900 font-medium transition">Laws</a>
+              <a href="/vets/" class="text-gray-700 hover:text-gray-900 font-medium transition">Vets</a>
+              <a href="/breeders/" class="text-gray-700 hover:text-gray-900 font-medium transition">Breeders</a>
+              <a href="/setups/" class="text-gray-700 hover:text-gray-900 font-medium transition">Setups</a>
+              <a href="/contact/" class="text-gray-700 hover:text-gray-900 font-medium transition">Contact</a>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-gray-900">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+          <!-- Mobile Menu -->
+          <nav id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+            <a href="/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Home</a>
+            <a href="/pets/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Pets</a>
+            <a href="/laws/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Laws</a>
+            <a href="/vets/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Vets</a>
+            <a href="/breeders/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Breeders</a>
+            <a href="/setups/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Setups</a>
+            <a href="/contact/" class="block text-gray-700 hover:text-gray-900 font-medium py-2">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="flex-grow container mx-auto px-4 py-8">
+        <slot />
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-pastel-pink mt-12">
+        <div class="container mx-auto px-4 py-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-4">Exotic Pet Atlas</h3>
+              <p class="text-gray-700">Your comprehensive guide to exotic pet ownership, care, and regulations.</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Links</h3>
+              <ul class="space-y-2">
+                <li><a href="/pets/" class="text-gray-700 hover:text-gray-900 transition">Browse Pets</a></li>
+                <li><a href="/laws/" class="text-gray-700 hover:text-gray-900 transition">State Laws</a></li>
+                <li><a href="/vets/" class="text-gray-700 hover:text-gray-900 transition">Find Vets</a></li>
+                <li><a href="/breeders/" class="text-gray-700 hover:text-gray-900 transition">Find Breeders</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-4">Resources</h3>
+              <ul class="space-y-2">
+                <li><a href="/setups/" class="text-gray-700 hover:text-gray-900 transition">Care Setups</a></li>
+                <li><a href="/contact/" class="text-gray-700 hover:text-gray-900 transition">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="border-t border-gray-300 mt-8 pt-6 text-center text-gray-600">
+            <p>&copy; {new Date().getFullYear()} Exotic Pet Atlas. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      menuBtn?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>

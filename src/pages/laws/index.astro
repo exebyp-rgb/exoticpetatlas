@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const states = [
+  { name: 'New Jersey', slug: 'new-jersey', abbreviation: 'NJ' },
+  { name: 'California', slug: 'california', abbreviation: 'CA' },
+  { name: 'Texas', slug: 'texas', abbreviation: 'TX' },
+  { name: 'Florida', slug: 'florida', abbreviation: 'FL' },
+  { name: 'New York', slug: 'new-york', abbreviation: 'NY' },
+  { name: 'Pennsylvania', slug: 'pennsylvania', abbreviation: 'PA' },
+  { name: 'Illinois', slug: 'illinois', abbreviation: 'IL' },
+  { name: 'Ohio', slug: 'ohio', abbreviation: 'OH' },
+  { name: 'Georgia', slug: 'georgia', abbreviation: 'GA' },
+  { name: 'North Carolina', slug: 'north-carolina', abbreviation: 'NC' },
+  { name: 'Michigan', slug: 'michigan', abbreviation: 'MI' },
+  { name: 'Arizona', slug: 'arizona', abbreviation: 'AZ' },
+];
+---
+
+<BaseLayout title="Exotic Pet Laws" description="Comprehensive guide to exotic pet ownership laws and regulations by state.">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">Exotic Pet Laws by State</h1>
+    
+    <div class="bg-pastel-pink rounded-2xl p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">⚖️ Know Before You Own</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        Exotic pet ownership laws vary significantly by state, and sometimes by county or city. 
+        Before acquiring an exotic pet, it's crucial to research and understand all applicable regulations.
+      </p>
+      <p class="text-gray-700 mb-4">
+        Laws cover permits, prohibited species, housing requirements, and more. 
+        Violating these laws can result in fines, confiscation of animals, or legal action.
+      </p>
+      <div class="bg-white rounded-xl p-4 mt-4">
+        <p class="text-sm text-gray-600">
+          <strong>Disclaimer:</strong> This information is for educational purposes only. 
+          Always verify current laws with your state's wildlife or agriculture department before acquiring an exotic pet.
+        </p>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Select Your State</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {states.map(state => (
+        <a href={`/laws/${state.slug}/`} class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-105">
+          <div class="text-4xl mb-3 text-center">📍</div>
+          <h3 class="text-xl font-bold text-gray-800 text-center mb-1">{state.name}</h3>
+          <p class="text-gray-600 text-center text-sm">{state.abbreviation}</p>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 bg-pastel-blue rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">General Legal Considerations</h2>
+      <div class="space-y-4 text-gray-700">
+        <div>
+          <h3 class="font-bold text-lg mb-2">🔍 Research Requirements</h3>
+          <p>Check federal, state, county, and city regulations. Some municipalities have stricter rules than the state.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-2">📄 Permits & Licenses</h3>
+          <p>Many states require permits for certain exotic animals. Applications may involve inspections and fees.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-2">🏠 Housing Standards</h3>
+          <p>Some states mandate specific enclosure sizes, safety features, and environmental controls.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-2">🚫 Prohibited Species</h3>
+          <p>Certain animals may be completely banned due to safety, invasive species, or conservation concerns.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 bg-pastel-green rounded-2xl p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Don't See Your State?</h2>
+      <p class="text-gray-700 mb-4">
+        We're working to expand our coverage to all 50 states. 
+        <a href="/contact/" class="text-blue-600 hover:underline font-semibold">Contact us</a> if you'd like to contribute information about your state's laws.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
