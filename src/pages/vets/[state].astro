@@ -418,7 +418,9 @@ const keywords = `exotic vets ${stateInfo.name}, ${stateInfo.abbreviation} exoti
                 )}
 
                 <div>
-                  <p class="font-semibold text-gray-800 text-sm mb-2">🐾 Specialties:</p>
+                  <p class="font-semibold text-gray-800 text-sm mb-2 flex items-center gap-1">
+                    <img src="/favicon.svg" alt="" class="w-4 h-4" /> Specialties:
+                  </p>
                   <div class="flex flex-wrap gap-2">
                     {clinic.specialties.map(specialty => (
                       <span class="bg-pastel-blue text-gray-800 text-xs px-2 py-1 rounded">

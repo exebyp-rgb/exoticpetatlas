@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle (optional, can be transparent) -->
+  <circle cx="100" cy="100" r="95" fill="#F5E6D3" opacity="0.3"/>
+  
+  <!-- Outer eye shape with subtle texture -->
+  <ellipse cx="100" cy="100" rx="80" ry="50" fill="#E5D4ED" stroke="#9B8AA3" stroke-width="1.5"/>
+  
+  <!-- Chitin/scale texture around eyelids -->
+  <path d="M 20,100 Q 30,85 50,80 T 100,75 T 150,80 Q 170,85 180,100" 
+        fill="none" stroke="#9B8AA3" stroke-width="0.5" opacity="0.4"/>
+  <path d="M 20,100 Q 30,115 50,120 T 100,125 T 150,120 Q 170,115 180,100" 
+        fill="none" stroke="#9B8AA3" stroke-width="0.5" opacity="0.4"/>
+  
+  <!-- Upper eyelid detail lines -->
+  <path d="M 40,95 Q 70,80 100,78 Q 130,80 160,95" 
+        fill="none" stroke="#C9B8D4" stroke-width="1" opacity="0.6"/>
+  
+  <!-- White of eye (sclera) -->
+  <ellipse cx="100" cy="100" rx="65" ry="42" fill="#FEFEFE"/>
+  
+  <!-- Iris with gradient - deep teal/midnight blue -->
+  <defs>
+    <radialGradient id="irisGradient" cx="45%" cy="40%">
+      <stop offset="0%" style="stop-color:#4FD1C5;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#2C7A7B;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#1A365D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F1419;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Subtle pattern for iris texture -->
+    <pattern id="irisPattern" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.5" fill="#1A365D" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <circle cx="100" cy="100" r="28" fill="url(#irisGradient)"/>
+  <circle cx="100" cy="100" r="28" fill="url(#irisPattern)"/>
+  
+  <!-- Pupil -->
+  <ellipse cx="100" cy="100" rx="12" ry="16" fill="#000000"/>
+  
+  <!-- Inner pupil slit (reptilian/exotic) -->
+  <ellipse cx="100" cy="100" rx="3" ry="14" fill="#0F1419" opacity="0.8"/>
+  
+  <!-- Highlight spark - small but bright -->
+  <ellipse cx="92" cy="88" rx="5" ry="7" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="108" cy="95" r="2.5" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Subtle reflection on iris -->
+  <path d="M 75,90 Q 80,85 85,88 T 95,92" 
+        fill="none" stroke="#4FD1C5" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+  
+  <!-- Lower eyelid detail -->
+  <path d="M 40,105 Q 70,120 100,122 Q 130,120 160,105" 
+        fill="none" stroke="#C9B8D4" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Very subtle outer glow for depth -->
+  <ellipse cx="100" cy="100" rx="82" ry="52" 
+           fill="none" stroke="#9B8AA3" stroke-width="0.5" opacity="0.2"/>
+</svg>
