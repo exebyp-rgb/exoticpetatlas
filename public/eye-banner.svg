@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5E6D3;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#E5D4ED;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#C9E4F0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Iris gradient -->
+    <radialGradient id="irisBannerGradient" cx="45%" cy="40%">
+      <stop offset="0%" style="stop-color:#4FD1C5;stop-opacity:0.8" />
+      <stop offset="40%" style="stop-color:#2C7A7B;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#1A365D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F1419;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Pattern for texture -->
+    <pattern id="irisBannerPattern" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="0.8" fill="#1A365D" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Soft background -->
+  <rect width="1600" height="900" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative circles in background (negative space) -->
+  <circle cx="200" cy="150" r="80" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="1400" cy="750" r="100" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="1500" cy="200" r="60" fill="#FFFFFF" opacity="0.08"/>
+  <circle cx="100" cy="700" r="70" fill="#FFFFFF" opacity="0.08"/>
+  
+  <!-- Main eye centered -->
+  <g transform="translate(800, 450)">
+    <!-- Outer eye shape with subtle texture -->
+    <ellipse cx="0" cy="0" rx="320" ry="200" fill="#E5D4ED" stroke="#9B8AA3" stroke-width="3"/>
+    
+    <!-- Chitin/scale texture around eyelids -->
+    <path d="M -320,0 Q -280,-60 -200,-80 T 0,-90 T 200,-80 Q 280,-60 320,0" 
+          fill="none" stroke="#9B8AA3" stroke-width="2" opacity="0.4"/>
+    <path d="M -320,0 Q -280,60 -200,80 T 0,90 T 200,80 Q 280,60 320,0" 
+          fill="none" stroke="#9B8AA3" stroke-width="2" opacity="0.4"/>
+    
+    <!-- Upper eyelid detail lines -->
+    <path d="M -260,-40 Q -140,-80 0,-88 Q 140,-80 260,-40" 
+          fill="none" stroke="#C9B8D4" stroke-width="2.5" opacity="0.6"/>
+    
+    <!-- White of eye (sclera) -->
+    <ellipse cx="0" cy="0" rx="280" ry="170" fill="#FEFEFE"/>
+    
+    <!-- Iris -->
+    <circle cx="0" cy="0" r="110" fill="url(#irisBannerGradient)"/>
+    <circle cx="0" cy="0" r="110" fill="url(#irisBannerPattern)"/>
+    
+    <!-- Pupil - reptilian slit -->
+    <ellipse cx="0" cy="0" rx="45" ry="70" fill="#000000"/>
+    <ellipse cx="0" cy="0" rx="12" ry="60" fill="#0F1419" opacity="0.8"/>
+    
+    <!-- Highlight spark -->
+    <ellipse cx="-30" cy="-35" rx="18" ry="24" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="40" cy="-15" r="9" fill="#FFFFFF" opacity="0.7"/>
+    <circle cx="-45" cy="20" r="5" fill="#4FD1C5" opacity="0.5"/>
+    
+    <!-- Subtle reflection on iris -->
+    <path d="M -90,-45 Q -70,-55 -50,-48 T -15,-35" 
+          fill="none" stroke="#4FD1C5" stroke-width="4" opacity="0.3" stroke-linecap="round"/>
+    
+    <!-- Lower eyelid detail -->
+    <path d="M -260,40 Q -140,80 0,88 Q 140,80 260,40" 
+          fill="none" stroke="#C9B8D4" stroke-width="2.5" opacity="0.5"/>
+    
+    <!-- Outer glow for depth -->
+    <ellipse cx="0" cy="0" rx="325" ry="205" 
+             fill="none" stroke="#9B8AA3" stroke-width="1.5" opacity="0.2"/>
+  </g>
+  
+  <!-- Subtle ambient elements -->
+  <circle cx="350" cy="450" r="3" fill="#2C7A7B" opacity="0.3"/>
+  <circle cx="1250" cy="450" r="3" fill="#2C7A7B" opacity="0.3"/>
+  <circle cx="450" cy="300" r="2" fill="#1A365D" opacity="0.2"/>
+  <circle cx="1150" cy="600" r="2" fill="#1A365D" opacity="0.2"/>
+</svg>
