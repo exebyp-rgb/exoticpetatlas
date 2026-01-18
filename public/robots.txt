@@ -1,0 +1,5 @@
+# ExoticPetAtlas robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://exoticpetatlas.com/sitemap-index.xml
