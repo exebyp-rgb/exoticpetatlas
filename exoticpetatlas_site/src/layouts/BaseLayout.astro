@@ -1,0 +1,32 @@
+---
+const { title = 'ExoticPetAtlas', description = 'Your trusted guide to exotic pets in the USA' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.svg" />
+</head>
+<body class="bg-secondary text-dark min-h-screen flex flex-col">
+  <header class="bg-primary text-white p-4">
+    <h1 class="text-3xl font-bold"><a href="/">ExoticPetAtlas</a></h1>
+    <nav class="mt-2 space-x-4">
+      <a href="/pets" class="hover:underline">Pets</a>
+      <a href="/laws" class="hover:underline">Legality</a>
+      <a href="/vets" class="hover:underline">Vets</a>
+      <a href="/breeders" class="hover:underline">Breeders & Rescues</a>
+      <a href="/setups" class="hover:underline">Setups</a>
+    </nav>
+  </header>
+  <main class="flex-1 container mx-auto p-4">
+    <slot />
+  </main>
+  <footer class="bg-primary text-white p-4 text-center">
+    © {new Date().getFullYear()} ExoticPetAtlas. All rights reserved.
+  </footer>
+</body>
+</html>

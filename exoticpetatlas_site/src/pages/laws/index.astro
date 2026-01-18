@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','New Jersey','Texas'];
+---
+
+<BaseLayout title="Exotic Pet Laws by State">
+  <h2 class="text-3xl font-bold mb-4">Is Your Exotic Pet Legal?</h2>
+  <p class="mb-6">Laws vary widely across the United States. Select your state to learn more about which exotic pets are allowed or restricted.</p>
+  <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {states.map(state => (
+      <li><a href={`/laws/${state.toLowerCase().replace(/\s+/g,'-')}`} class="text-primary font-bold hover:underline">{state}</a></li>
+    ))}
+  </ul>
+</BaseLayout>

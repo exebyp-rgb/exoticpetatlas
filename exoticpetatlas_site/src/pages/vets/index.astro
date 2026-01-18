@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const states = ['New Jersey','New York','Florida','California'];
+---
+
+<BaseLayout title="Find Exotic Vets">
+  <h2 class="text-3xl font-bold mb-4">Exotic Pet Veterinarians</h2>
+  <p class="mb-6">Locate veterinary services specializing in exotic animals across the US. Select your state to see local listings.</p>
+  <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {states.map(state => (
+      <li><a href={`/vets/${state.toLowerCase().replace(/\s+/g,'-')}`} class="text-primary font-bold hover:underline">{state}</a></li>
+    ))}
+  </ul>
+</BaseLayout>

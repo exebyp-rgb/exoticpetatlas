@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="ExoticPetAtlas - Discover the World of Exotic Pets" description="Explore care guides, legality by state, veterinary resources, breeders, and setup recommendations for exotic pets.">
+  <section class="text-center">
+    <h2 class="text-4xl font-bold mb-4">Welcome to ExoticPetAtlas</h2>
+    <p class="mb-6">Your trusted guide to exotic pets in the United States. Learn how to care for your companions, understand legal requirements, find vets and breeders, and create perfect setups.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-xl font-semibold mb-2">Care Guides</h3>
+        <p class="mb-4">Comprehensive information on nutrition, habitat, health, and enrichment for various exotic pets.</p>
+        <a href="/pets" class="text-primary font-bold">Explore Pets →</a>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-xl font-semibold mb-2">Legality</h3>
+        <p class="mb-4">Check if your favorite pet is legal in your state or city and discover permit requirements.</p>
+        <a href="/laws" class="text-primary font-bold">Check Laws →</a>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-xl font-semibold mb-2">Vets & Services</h3>
+        <p class="mb-4">Find exotic pet veterinarians, breeders, and rescue organizations near you.</p>
+        <a href="/vets" class="text-primary font-bold">Find Vets →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pets = [
+  { name: 'Axolotl', slug: 'axolotl', description: 'Aquatic salamander known for its regenerative abilities.' },
+  { name: 'Ferret', slug: 'ferret', description: 'Playful and curious mammal often kept as a pet.' },
+  { name: 'Fennec Fox', slug: 'fennec-fox', description: 'Small fox with large ears from the Sahara Desert.' },
+  { name: 'Capybara', slug: 'capybara', description: 'World’s largest rodent, semi-aquatic and social.' },
+];
+---
+
+<BaseLayout title="Exotic Pets - Care Guides">
+  <h2 class="text-3xl font-bold mb-4">Exotic Pet Care Guides</h2>
+  <p class="mb-6">Select an animal below to learn about their care, diet, habitat, and health needs.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {pets.map(pet => (
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-xl font-semibold mb-2">{pet.name}</h3>
+        <p class="mb-4">{pet.description}</p>
+        <a href={`/pets/${pet.slug}`} class="text-primary font-bold">Learn More →</a>
+      </div>
+    ))}
+  </div>
+</BaseLayout>

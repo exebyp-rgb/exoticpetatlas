@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const setups = [
+  { name: 'Bearded Dragon Setup', slug: 'bearded-dragon', description: 'Everything you need to create a comfortable habitat for bearded dragons.' },
+  { name: 'Axolotl Aquarium', slug: 'axolotl-aquarium', description: 'Tank requirements and equipment for keeping axolotls healthy.' },
+  { name: 'Ferret Cage Setup', slug: 'ferret-cage', description: 'Accessories and tips to build an enriching environment for ferrets.' },
+];
+---
+
+<BaseLayout title="Setup & Equipment Recommendations">
+  <h2 class="text-3xl font-bold mb-4">Setup & Equipment</h2>
+  <p class="mb-6">Create the perfect environment for your exotic pet with our curated setup guides and product recommendations.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {setups.map(item => (
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-xl font-semibold mb-2">{item.name}</h3>
+        <p class="mb-4">{item.description}</p>
+        <a href={`/setups/${item.slug}`} class="text-primary font-bold">View Setup →</a>
+      </div>
+    ))}
+  </div>
+</BaseLayout>
